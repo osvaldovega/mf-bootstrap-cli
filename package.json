@@ -1,0 +1,37 @@
+{
+  "name": "@mfbootstrap/create-project",
+  "version": "1.0.0",
+  "description": "Bootstrap to create projects with Webpack Module Federation Plugin",
+  "main": "src/index.js",
+  "bin": {
+    "@mfbootstrap/create-project": "bin/create-project",
+    "create-project": "bin/create-project"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Webpack",
+    "Module",
+    "Federation",
+    "javascript",
+    "bootstrap",
+    "cli",
+    "create-project"
+  ],
+  "author": "Osvaldo Vega A (OvEgA)",
+  "license": "ISC",
+  "dependencies": {
+    "arg": "4.1.3",
+    "chalk": "4.1.0",
+    "esm": "3.2.25",
+    "execa": "4.0.2",
+    "inquirer": "7.3.0",
+    "listr": "0.14.3",
+    "ncp": "2.0.0",
+    "pkg-install": "1.0.0"
+  }
+}
