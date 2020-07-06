@@ -11,67 +11,62 @@ const access = promisify(fs.access);
 const copy = promisify(ncp);
 
 async function copyTemplateFiles(options) {
-  return copy(options.templateDirectory, options.targetDirectory, {
-    clobber: false,
-  });
-};
+	return copy(options.templateDirectory, options.targetDirectory, {
+		clobber: false,
+	});
+}
 
 async function initGit(options) {
-  const result = await execa('git', ['init'], {
-    cwd: options.targetDirectory,  
-  });
+	const result = await execa('git', ['init'], {
+		cwd: options.targetDirectory,
+	});
 
-  if (result.failed) return Promise.reject(new Error('Failed to initialize Git'));
-  
-  return;
-};
+	if (result.failed) return Promise.reject(new Error('Failed to initialize Git'));
+
+	return;
+}
 
 export async function createProject(options) {
-  options = { 
-    ...options,
-    targetDirectory: options.targetDirectory || process.cwd(),
-  };
+	options = {
+		...options,
+		targetDirectory: options.targetDirectory || process.cwd(),
+	};
 
-  const currentFileUrl = import.meta.url;
-  
-  const templateDir = path.resolve(
-    new URL(currentFileUrl).pathname,
-    '../../templates',
-    options.template.toLowerCase(),
-  );
+	const currentFileUrl = import.meta.url;
 
-  options.templateDirectory = templateDir;
+	const templateDir = path.resolve(new URL(currentFileUrl).pathname, '../../templates', options.template.toLowerCase());
 
-  try {
-    await access(templateDir, fs.constants.R_OK);
-  } catch (err) {
-    console.error('%s Invalid template name', chalk.red.bold('ERROR'));
-    process.exit(1);
-  };
+	options.templateDirectory = templateDir;
 
-  const tasks = new Listr([
-    {
-      title: 'Copy project files.',
-      task: () => copyTemplateFiles(options),
-    },
-    {
-      title: 'Initialize Git.',
-      task: () => initGit(options),
-      enabled: () => options.git,
-    },
-    {
-      title: 'Install dependecies.',
-      task: () => projectInstall({
-        cwd: options.targetDirectory
-      }),
-      skip: () => !options.runInstall
-        ? 'Pass --install to automatically install dependcies'
-        : undefined,
-    },
-  ]);
+	try {
+		await access(templateDir, fs.constants.R_OK);
+	} catch (err) {
+		console.error('%s Invalid template name', chalk.red.bold('ERROR'));
+		process.exit(1);
+	}
 
-  await tasks.run();
+	const tasks = new Listr([
+		{
+			title: 'Copy project files.',
+			task: () => copyTemplateFiles(options),
+		},
+		{
+			title: 'Initialize Git.',
+			task: () => initGit(options),
+			enabled: () => options.git,
+		},
+		{
+			title: 'Install dependecies.',
+			task: () =>
+				projectInstall({
+					cwd: options.targetDirectory,
+				}),
+			skip: () => (!options.runInstall ? 'Pass --install to automatically install dependcies' : undefined),
+		},
+	]);
 
-  console.log('%s Project ready', chalk.green.bold('DONE'));
-  return true;
-};
+	await tasks.run();
+
+	console.log('%s Project ready', chalk.green.bold('DONE'));
+	return true;
+}
