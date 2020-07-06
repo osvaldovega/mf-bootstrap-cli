@@ -57,10 +57,8 @@ export async function createProject(options) {
 		},
 		{
 			title: 'Install dependecies.',
-			task: () =>
-				projectInstall({
-					cwd: options.targetDirectory,
-				}),
+			enabled: (ctx) => ctx.npm === false,
+			task: () => projectInstall({ cwd: options.targetDirectory }),
 			skip: () => (!options.runInstall ? 'Pass --install to automatically install dependcies' : undefined),
 		},
 	]);
