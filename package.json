@@ -3,9 +3,10 @@
 	"version": "1.0.0",
 	"description": "Bootstrap to create projects with Webpack Module Federation Plugin",
 	"main": "src/index.js",
+	"private": true,
 	"bin": {
 		"@mfbootstrap/create-project": "bin/create-project",
-		"create-project": "bin/create-project"
+		"mf-bootstrap": "bin/create-project"
 	},
 	"publishConfig": {
 		"access": "public"
@@ -15,24 +16,17 @@
 		"lint": "eslint src/"
 	},
 	"keywords": [
-		"Webpack",
-		"Module",
-		"Federation",
+		"webpack",
+		"module",
+		"federation",
 		"javascript",
 		"bootstrap",
 		"cli",
-		"create-project"
+		"create-project",
+		"react"
 	],
-	"husky": {
-		"hooks": {
-			"pre-commit": "npm run lint"
-		}
-	},
-	"author": "Osvaldo Vega A (OvEgA)",
-	"license": "ISC",
 	"dependencies": {
 		"arg": "4.1.3",
-		"chalk": "4.1.0",
 		"esm": "3.2.25",
 		"execa": "4.0.2",
 		"inquirer": "7.3.0",
@@ -41,12 +35,31 @@
 		"pkg-install": "1.0.0"
 	},
 	"devDependencies": {
+		"chalk": "4.1.0",
+		"chalk-pipe": "4.0.0",
 		"eslint": "7.4.0",
 		"eslint-config-prettier": "6.11.0",
 		"eslint-plugin-standard": "4.0.1",
-		"husky": "4.2.5"
+		"husky": "4.2.5",
+		"validate-npm-package-name": "3.0.0"
+	},
+	"author": "Osvaldo Vega A (OvEgA)",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/osvaldovega/mf-bootstrap.git"
 	},
 	"engines": {
-		"node": ">=8.10.0"
+		"node": ">=10"
+	},
+	"license": "ISC",
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
+	"lint-staged": {
+		"*.{js,md,css,html}": [
+			"prettier --trailing-comma es5 --single-quote --write"
+		]
 	}
 }
