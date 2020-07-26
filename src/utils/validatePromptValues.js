@@ -16,6 +16,8 @@ export const promptForMissingOptions = async (options) => {
 	if (!options.appName) questions.push(promptQuestions.appName);
 	if (!options.template) questions.push(promptQuestions.template);
 	if (!options.git) questions.push(promptQuestions.git);
+	if (!options.install) questions.push(promptQuestions.installDependencies);
+	if (!options.packageManager) questions.push(promptQuestions.packageManager);
 
 	const answers = await inquirer.prompt(questions);
 
@@ -24,5 +26,7 @@ export const promptForMissingOptions = async (options) => {
 		appName: options.appName || answers.appName,
 		git: options.git || answers.git,
 		template: options.template || answers.template,
+		install: options.install || answers.install,
+		packageManager: options.packageManager || answers.packageManager,
 	};
 };
