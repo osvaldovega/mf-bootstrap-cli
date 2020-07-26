@@ -1,6 +1,6 @@
 import chalkPipe from 'chalk-pipe';
-import { validateApplicationName } from './validateName';
-import { DEFAULT_NAME, DEFAULT_TEMPLATE } from './constants';
+import { validateApplicationName } from './validateProjectName';
+import { DEFAULT_NAME, DEFAULT_TEMPLATE, DEFAULT_PACKAGE_MANAGER } from './constants';
 
 export const appName = {
 	type: 'input',
@@ -26,8 +26,25 @@ export const git = {
 	default: false,
 };
 
+export const installDependencies = {
+	type: 'confirm',
+	name: 'install',
+	message: 'Install project dependencies?',
+	default: false,
+};
+
+export const packageManager = {
+	type: 'list',
+	name: 'packageManager',
+	message: 'Please choose which package manager to use',
+	choices: ['npm', 'yarn'],
+	default: DEFAULT_PACKAGE_MANAGER,
+};
+
 export default {
 	appName,
-	template,
 	git,
+	installDependencies,
+	packageManager,
+	template,
 };
