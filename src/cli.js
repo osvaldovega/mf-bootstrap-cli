@@ -1,6 +1,6 @@
 import { createProject } from './utils/createProject';
 import { parseArgumentsIntoOptions } from './utils/parseArguments';
-import { promptForMissingOptions } from './utils/validateInputValues';
+import { promptForMissingOptions } from './utils/validatePromptValues';
 
 export async function cli(args) {
 	const options = parseArgumentsIntoOptions(args);
