@@ -8,12 +8,16 @@ export const parseArgumentsIntoOptions = (rawArgs) => {
 			'--install': Boolean,
 			'--name': String,
 			'--yes': Boolean,
+			'--pManager': String,
+			'--template': String,
 
 			// Aliases
 			'-g': '--git',
 			'-i': '--install',
 			'-n': '--name',
 			'-y': '--yes',
+			'-pm': '--pManager',
+			'-t': '--template',
 		},
 		{
 			argv: rawArgs.slice(2),
@@ -22,9 +26,10 @@ export const parseArgumentsIntoOptions = (rawArgs) => {
 
 	return {
 		git: args['--git'] || false,
-		runInstall: args['--install'] || false,
+		install: args['--install'] || false,
 		appName: args['--name'] || '',
 		skipPrompts: args['--yes'] || false,
-		template: args._[0],
+		template: args['--template'] || '',
+		packageManager: args['--pManager'] || '',
 	};
 };
