@@ -1,7 +1,6 @@
 'use strict';
-
-const { validateNodeVersion } = require('./utils/validateNodeVersion');
+import { validateNodeVersion } from './utils/validateNodeVersion';
+import { cli } from './cli';
 
 validateNodeVersion();
-
-require('./cli').cli(process.argv);
+cli(process.argv);
