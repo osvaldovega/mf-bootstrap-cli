@@ -12,7 +12,7 @@ export const validateApplicationName = (appName) => {
 		);
 
 		[...(validationResult.errors || []), ...(validationResult.warnings || [])].forEach((error) => {
-			console.error(red(`  * ${error}`));
+			console.error(red(`\t* ${error}`));
 		});
 
 		console.error(white('\n\tPlease choose a different project name.\n'));
