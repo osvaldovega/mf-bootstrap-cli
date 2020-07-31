@@ -1,10 +1,10 @@
-import { createProject } from './utils/createProject';
-import { parseArgumentsIntoOptions } from './utils/parseArguments';
-import { promptForMissingOptions } from './utils/validatePromptValues';
+import createProject from './utils/createProject';
+import parseArgumentsIntoOptions from './utils/parseArguments';
+import { validateMissingPromptOptions } from './utils/validations';
 
-export async function cli(args) {
+export default async function cli(args) {
 	const options = parseArgumentsIntoOptions(args);
-	const updateOptions = await promptForMissingOptions(options);
+	const updateOptions = await validateMissingPromptOptions(options);
 
 	const { version, help } = options;
 

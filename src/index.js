@@ -1,6 +1,5 @@
-'use strict';
-import { validateNodeVersion } from './utils/validateNodeVersion';
-import { cli } from './cli';
+import { validateNodeVersion } from './utils/validations';
+import cli from './cli';
 
 validateNodeVersion();
 cli(process.argv);

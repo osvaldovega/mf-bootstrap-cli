@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-console */
 import { greenBold, redUnderlineBold, blue, whiteBold, green, whiteUnderlineBold } from './chalk';
 
 export const mainBannerMessage = () => {
@@ -36,7 +38,7 @@ export const cliHelp = () => {
 export const nodeVersionError = (currentNodeVersion) => {
 	console.log();
 	console.error(`\t${redUnderlineBold('ERROR')}`);
-	console.error(`\n\tYou are running ${greenBold('Node ' + currentNodeVersion)}`);
+	console.error(`\n\tYou are running ${greenBold(`Node ${currentNodeVersion}`)}`);
 	console.error(`\t${blue('Micro-Frontend Bootstrap (mf-bootstrap)')} requires ${greenBold('Node 10')} or higher`);
 	console.error(`\t${whiteBold('Please update your version of Node.')}`);
 	console.log();

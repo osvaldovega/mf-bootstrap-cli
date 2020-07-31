@@ -1,25 +1,25 @@
 import arg from 'arg';
 
-export const parseArgumentsIntoOptions = (rawArgs) => {
+const parseArgumentsIntoOptions = (rawArgs) => {
 	const args = arg(
 		{
 			// Types
+			'--name': String,
+			'--template': String,
 			'--git': Boolean,
 			'--install': Boolean,
-			'--name': String,
-			'--skip': Boolean,
 			'--pManager': String,
-			'--template': String,
+			'--skip': Boolean,
 			'--version': Boolean,
 			'--help': Boolean,
 
 			// Aliases
+			'-n': '--name',
+			'-t': '--template',
 			'-g': '--git',
 			'-i': '--install',
-			'-n': '--name',
-			'-s': '--skip',
 			'-p': '--pManager',
-			'-t': '--template',
+			'-s': '--skip',
 			'-v': '--version',
 			'-h': '--help',
 		},
@@ -29,13 +29,15 @@ export const parseArgumentsIntoOptions = (rawArgs) => {
 	);
 
 	return {
+		appName: args['--name'] || '',
+		template: args['--template'] || '',
 		git: args['--git'] || false,
 		install: args['--install'] || false,
-		appName: args['--name'] || '',
-		skipPrompts: args['--skip'] || false,
-		template: args['--template'] || '',
 		packageManager: args['--pManager'] || '',
+		skipPrompts: args['--skip'] || false,
 		version: args['--version'] || false,
 		help: args['--help'] || false,
 	};
 };
+
+export default parseArgumentsIntoOptions;

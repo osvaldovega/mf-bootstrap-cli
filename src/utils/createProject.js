@@ -12,7 +12,7 @@ const copy = promisify(ncp);
 
 const checkAccessToTemplateDir = async ({ templateDirectory }) => {
 	try {
-		await access(templateDirectory, fs.constants.R_OK);
+		return await access(templateDirectory, fs.constants.R_OK);
 	} catch (err) {
 		return Promise.reject(new Error('Missing template files, the select template it is not valid'));
 	}
@@ -21,18 +21,24 @@ const checkAccessToTemplateDir = async ({ templateDirectory }) => {
 const createNewProjectDir = async ({ appName, targetDirectory }, context, task) => {
 	try {
 		task.title = `${task.title} - (${context.appName})`;
-		await execa('mkdir', [appName], { cwd: targetDirectory });
+		return await execa('mkdir', [appName], { cwd: targetDirectory });
 	} catch (err) {
 		return Promise.reject(
-			new Error(`Failed to create directory ${appName}, check there is no other directory with the same name`),
+			new Error(
+				`Failed to create directory ${appName}, check there is no other directory with the same name`,
+			),
 		);
 	}
 };
 
-const copyTemplateFiles = async ({ templateDirectory, targetDirectory, appName }, context, task) => {
+const copyTemplateFiles = async (
+	{ templateDirectory, targetDirectory, appName },
+	context,
+	task,
+) => {
 	try {
 		task.title = `${task.title} - (${context.template})`;
-		await copy(templateDirectory, path.join(targetDirectory, appName), { clobber: false });
+		return await copy(templateDirectory, path.join(targetDirectory, appName), { clobber: false });
 	} catch (error) {
 		return Promise.reject(new Error('Failed to copy files to destiny directory'));
 	}
@@ -40,7 +46,7 @@ const copyTemplateFiles = async ({ templateDirectory, targetDirectory, appName }
 
 const initGit = async ({ targetDirectory, appName }) => {
 	try {
-		await execa('git', ['init'], { cwd: path.join(targetDirectory, appName) });
+		return await execa('git', ['init'], { cwd: path.join(targetDirectory, appName) });
 	} catch (error) {
 		return Promise.reject(new Error('Failed to initialize Git'));
 	}
@@ -48,7 +54,10 @@ const initGit = async ({ targetDirectory, appName }) => {
 
 const installProjectDependencies = async ({ targetDirectory, appName, packageManager }) => {
 	try {
-		await projectInstall({ cwd: path.join(targetDirectory, appName), prefer: packageManager });
+		return await projectInstall({
+			cwd: path.join(targetDirectory, appName),
+			prefer: packageManager,
+		});
 	} catch (error) {
 		return Promise.reject(new Error('Error installing project dependencies.'));
 	}
@@ -83,7 +92,7 @@ const runTasks = async (options) => {
 	return tasks.run(options);
 };
 
-export const createProject = async (options) => {
+const createProject = async (options) => {
 	const newOptions = {
 		...options,
 		targetDirectory: options.targetDirectory || process.cwd(),
@@ -95,9 +104,12 @@ export const createProject = async (options) => {
 		await runTasks(newOptions);
 		SuccessMessage();
 	} catch (err) {
+		// eslint-disable-next-line no-console
 		console.error();
 		process.exit(1);
 	}
 
 	return true;
 };
+
+export default createProject;
