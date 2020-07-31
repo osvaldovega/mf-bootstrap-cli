@@ -7,17 +7,21 @@ export const parseArgumentsIntoOptions = (rawArgs) => {
 			'--git': Boolean,
 			'--install': Boolean,
 			'--name': String,
-			'--yes': Boolean,
+			'--skip': Boolean,
 			'--pManager': String,
 			'--template': String,
+			'--version': Boolean,
+			'--help': Boolean,
 
 			// Aliases
 			'-g': '--git',
 			'-i': '--install',
 			'-n': '--name',
-			'-y': '--yes',
-			'-pm': '--pManager',
+			'-s': '--skip',
+			'-p': '--pManager',
 			'-t': '--template',
+			'-v': '--version',
+			'-h': '--help',
 		},
 		{
 			argv: rawArgs.slice(2),
@@ -28,8 +32,10 @@ export const parseArgumentsIntoOptions = (rawArgs) => {
 		git: args['--git'] || false,
 		install: args['--install'] || false,
 		appName: args['--name'] || '',
-		skipPrompts: args['--yes'] || false,
+		skipPrompts: args['--skip'] || false,
 		template: args['--template'] || '',
 		packageManager: args['--pManager'] || '',
+		version: args['--version'] || false,
+		help: args['--help'] || false,
 	};
 };

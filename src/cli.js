@@ -5,5 +5,8 @@ import { promptForMissingOptions } from './utils/validatePromptValues';
 export async function cli(args) {
 	const options = parseArgumentsIntoOptions(args);
 	const updateOptions = await promptForMissingOptions(options);
-	await createProject(updateOptions);
+
+	const { version, help } = options;
+
+	if (!version && !help) await createProject(updateOptions);
 }

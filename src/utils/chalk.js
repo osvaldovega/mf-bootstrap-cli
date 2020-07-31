@@ -9,5 +9,6 @@ export const blue = chalk.blueBright;
 export const blueBold = chalk.blueBright.bold;
 export const white = chalk.whiteBright;
 export const whiteBold = chalk.whiteBright.bold;
+export const whiteUnderlineBold = chalk.whiteBright.underline.bold;
 export const yellow = chalk.yellowBright;
 export const yellowBold = chalk.yellowBright.bold;

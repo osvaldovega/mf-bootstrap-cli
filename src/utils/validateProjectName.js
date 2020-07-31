@@ -1,6 +1,7 @@
 import validateProjectName from 'validate-npm-package-name';
 const { red, green, redUnderlineBold, white } = require('./chalk');
 
+// TODO - This function needs to be refactor
 export const validateApplicationName = (appName) => {
 	const validationResult = validateProjectName(appName);
 

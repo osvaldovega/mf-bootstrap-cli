@@ -1,15 +1,28 @@
 import inquirer from 'inquirer';
 import promptQuestions from './promptQuestions';
-import { DEFAULT_NAME, DEFAULT_TEMPLATE } from './constants';
+import { version } from '../../package.json';
+import { cliVersion, cliHelp } from './logMessages';
+import { DEFAULT_NAME, DEFAULT_TEMPLATE, DEFAULT_PACKAGE_MANAGER } from './constants';
 
 export const promptForMissingOptions = async (options) => {
 	const questions = [];
+
+	if (options.version) {
+		cliVersion(version);
+		return;
+	}
+
+	if (options.help) {
+		cliHelp(version);
+		return;
+	}
 
 	if (options.skipPrompts) {
 		return {
 			...options,
 			appName: options.appName || DEFAULT_NAME,
 			template: options.template || DEFAULT_TEMPLATE,
+			packageManager: options.packageManager || DEFAULT_PACKAGE_MANAGER,
 		};
 	}
 

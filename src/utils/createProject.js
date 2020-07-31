@@ -5,7 +5,7 @@ import { promisify } from 'util';
 import execa from 'execa';
 import Listr from 'listr';
 import { projectInstall } from 'pkg-install';
-import { mainBannerMessage, SuccessMessage } from './logMessage';
+import { mainBannerMessage, SuccessMessage } from './logMessages';
 
 const access = promisify(fs.access);
 const copy = promisify(ncp);
@@ -18,8 +18,9 @@ const checkAccessToTemplateDir = async ({ templateDirectory }) => {
 	}
 };
 
-const createNewProjectDir = async ({ appName, targetDirectory }) => {
+const createNewProjectDir = async ({ appName, targetDirectory }, context, task) => {
 	try {
+		task.title = `${task.title} - (${context.appName})`;
 		await execa('mkdir', [appName], { cwd: targetDirectory });
 	} catch (err) {
 		return Promise.reject(
@@ -28,8 +29,9 @@ const createNewProjectDir = async ({ appName, targetDirectory }) => {
 	}
 };
 
-const copyTemplateFiles = async ({ templateDirectory, targetDirectory, appName }) => {
+const copyTemplateFiles = async ({ templateDirectory, targetDirectory, appName }, context, task) => {
 	try {
+		task.title = `${task.title} - (${context.template})`;
 		await copy(templateDirectory, path.join(targetDirectory, appName), { clobber: false });
 	} catch (error) {
 		return Promise.reject(new Error('Failed to copy files to destiny directory'));
@@ -60,11 +62,11 @@ const runTasks = async (options) => {
 		},
 		{
 			title: 'Creating Project Directory.',
-			task: () => createNewProjectDir(options),
+			task: (context, task) => createNewProjectDir(options, context, task),
 		},
 		{
 			title: 'Coping Project files.',
-			task: () => copyTemplateFiles(options),
+			task: (context, task) => copyTemplateFiles(options, context, task),
 		},
 		{
 			title: 'Initializing Git.',
@@ -78,7 +80,7 @@ const runTasks = async (options) => {
 		},
 	]);
 
-	return tasks.run();
+	return tasks.run(options);
 };
 
 export const createProject = async (options) => {
