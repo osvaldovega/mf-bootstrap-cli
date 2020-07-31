@@ -16,7 +16,6 @@ const checkAccessToTemplateDir = async ({ templateDirectory }) => {
 	} catch (err) {
 		return Promise.reject(new Error('Missing template files, the select template it is not valid'));
 	}
-	return;
 };
 
 const createNewProjectDir = async ({ appName, targetDirectory }) => {
@@ -27,7 +26,6 @@ const createNewProjectDir = async ({ appName, targetDirectory }) => {
 			new Error(`Failed to create directory ${appName}, check there is no other directory with the same name`),
 		);
 	}
-	return;
 };
 
 const copyTemplateFiles = async ({ templateDirectory, targetDirectory, appName }) => {
@@ -36,7 +34,6 @@ const copyTemplateFiles = async ({ templateDirectory, targetDirectory, appName }
 	} catch (error) {
 		return Promise.reject(new Error('Failed to copy files to destiny directory'));
 	}
-	return;
 };
 
 const initGit = async ({ targetDirectory, appName }) => {
@@ -45,7 +42,6 @@ const initGit = async ({ targetDirectory, appName }) => {
 	} catch (error) {
 		return Promise.reject(new Error('Failed to initialize Git'));
 	}
-	return;
 };
 
 const installProjectDependencies = async ({ targetDirectory, appName, packageManager }) => {
@@ -54,7 +50,6 @@ const installProjectDependencies = async ({ targetDirectory, appName, packageMan
 	} catch (error) {
 		return Promise.reject(new Error('Error installing project dependencies.'));
 	}
-	return;
 };
 
 const runTasks = async (options) => {
@@ -68,7 +63,7 @@ const runTasks = async (options) => {
 			task: () => createNewProjectDir(options),
 		},
 		{
-			title: 'Coping project files.',
+			title: 'Coping Project files.',
 			task: () => copyTemplateFiles(options),
 		},
 		{
@@ -77,13 +72,13 @@ const runTasks = async (options) => {
 			skip: () => !options.git,
 		},
 		{
-			title: 'Installing dependencies.',
+			title: 'Installing Project Dependencies.',
 			task: () => installProjectDependencies(options),
 			skip: () => !options.install,
 		},
 	]);
 
-	await tasks.run();
+	return tasks.run();
 };
 
 export const createProject = async (options) => {
@@ -98,7 +93,7 @@ export const createProject = async (options) => {
 		await runTasks(newOptions);
 		SuccessMessage();
 	} catch (err) {
-		console.log('\n');
+		console.error();
 		process.exit(1);
 	}
 
