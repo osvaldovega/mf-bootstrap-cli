@@ -1,48 +1,61 @@
 {
-  "name": "microfrontend-blueprint",
-  "version": "1.0.0",
-  "main": "index.js",
-  "keywords": [
-    "Webpack",
-    "Module",
-    "Federation",
-    "javascript",
-    "bootstrap"
-  ],
-  "scripts": {
-    "start": "webpack-dev-server --config ./webpack/webpack.development.js",
-    "build": "webpack --config ./webpack/webpack.production.js",
-    "test": "react-scripts test"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.10.3",
-    "@babel/plugin-proposal-class-properties": "7.10.1",
-    "@babel/plugin-proposal-export-namespace-from": "7.10.1",
-    "@babel/plugin-proposal-function-sent": "7.10.1",
-    "@babel/plugin-syntax-dynamic-import": "7.8.3",
-    "@babel/plugin-syntax-import-meta": "7.10.1",
-    "@babel/preset-env": "7.10.2",
-    "@babel/preset-react": "^7.10.1",
-    "babel-loader": "^8.1.0",
-    "clean-webpack-plugin": "^3.0.0",
-    "css-loader": "^3.6.0",
-    "dotenv": "^8.2.0",
-    "html-webpack-plugin": "^4.3.0",
-    "mini-css-extract-plugin": "^0.9.0",
-    "node-sass": "^4.14.1",
-    "react-scripts": "^3.4.1",
-    "sass-loader": "^8.0.2",
-    "style-loader": "1.2.1",
-    "webpack": "5.0.0-beta.17",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0",
-    "webpack-merge": "^4.2.2"
-  },
-  "dependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
-  },
-  "repository": "",
-  "author": "",
-  "license": "MIT"
+	"name": "mf-application",
+	"version": "1.0.0",
+	"main": "index.js",
+	"keywords": [
+		"Webpack",
+		"Module",
+		"Federation",
+		"javascript",
+		"bootstrap"
+	],
+	"scripts": {
+		"start": "webpack-dev-server --config ./webpack/webpack.development.js",
+		"build": "webpack --config ./webpack/webpack.production.js",
+		"lint": "eslint src/",
+		"test": "react-scripts test"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.11.0",
+		"@babel/plugin-proposal-class-properties": "7.10.4",
+		"@babel/plugin-proposal-export-namespace-from": "7.10.4",
+		"@babel/plugin-proposal-function-sent": "7.10.4",
+		"@babel/plugin-syntax-dynamic-import": "7.8.3",
+		"@babel/plugin-syntax-import-meta": "7.10.4",
+		"@babel/preset-env": "7.11.0",
+		"@babel/preset-react": "^7.10.4",
+		"babel-loader": "^8.1.0",
+		"clean-webpack-plugin": "^3.0.0",
+		"css-loader": "^4.2.0",
+		"dotenv": "^8.2.0",
+		"eslint": "7.5.0",
+		"eslint-config-airbnb": "18.2.0",
+		"eslint-config-node": "4.1.0",
+		"eslint-config-prettier": "6.11.0",
+		"eslint-plugin-import": "2.22.0",
+		"eslint-plugin-jsx-a11y": "6.3.1",
+		"eslint-plugin-node": "11.1.0",
+		"eslint-plugin-prettier": "3.1.4",
+		"eslint-plugin-react": "7.20.5",
+		"eslint-plugin-react-hooks": "4.0.8",
+		"html-webpack-plugin": "^4.3.0",
+		"mini-css-extract-plugin": "^0.9.0",
+		"node-sass": "^4.14.1",
+		"prettier": "2.0.5",
+		"react-scripts": "^3.4.1",
+		"sass-loader": "^9.0.2",
+		"style-loader": "1.2.1",
+		"webpack": "5.0.0-beta.22",
+		"webpack-bundle-analyzer": "3.8.0",
+		"webpack-cli": "^3.3.12",
+		"webpack-dev-server": "^3.11.0",
+		"webpack-merge": "^5.0.9"
+	},
+	"dependencies": {
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1"
+	},
+	"repository": "",
+	"author": "",
+	"license": "MIT"
 }

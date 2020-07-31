@@ -1,16 +1,17 @@
-const merge = require("webpack-merge");
-const webpackBaseConfig = require("./webpack.config");
+const { merge } = require('webpack-merge');
+const webpackBaseConfig = require('./webpack.config');
 
 const webpackProduction = merge(webpackBaseConfig, {
-  output: {
-    publicPath: process.env.PUBLIC_PATH_PROD,
-  },
+	output: {
+		publicPath: process.env.PUBLIC_PATH_PROD,
+		chunkFilename: '[name].[contenthash].chunk.js',
+	},
 
-  mode: "production",
+	mode: 'production',
 
-  devtool: "source-map",
+	devtool: 'source-map',
 
-  cache: false,
+	cache: false,
 });
 
 module.exports = webpackProduction;

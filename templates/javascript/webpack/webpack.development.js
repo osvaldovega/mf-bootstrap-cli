@@ -1,37 +1,41 @@
-const path = require("path");
-const webpack = require("webpack");
-const merge = require("webpack-merge");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const webpackBaseConfig = require("./webpack.config");
+const path = require('path');
+const webpack = require('webpack');
+const { merge } = require('webpack-merge');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const webpackBaseConfig = require('./webpack.config');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-const BUILD_DIR = path.resolve(__dirname, "dist");
-const {PORT, HOST} = process.env;
+const BUILD_DIR = path.resolve(__dirname, 'dist');
+const { PORT, HOST } = process.env;
 
 const webpackDevelopment = merge(webpackBaseConfig, {
-  output: {
-    publicPath: `http://${HOST}:${PORT}/`,
-  },
+	output: {
+		publicPath: `http://${HOST}:${PORT}/`,
+		chunkFilename: '[name].chunk.js',
+	},
 
-  mode: "development",
+	mode: 'development',
 
-  devtool: "inline-source-map",
+	devtool: 'cheap-module-source-map',
 
-  cache: true,
+	cache: true,
 
-  devServer: {
-    historyApiFallback: true,
-    contentBase: BUILD_DIR,
-    hot: true,
-    open: true,
-    port: PORT,
-    host: HOST,
-  },
+	devServer: {
+		historyApiFallback: true,
+		contentBase: BUILD_DIR,
+		hot: true,
+		open: true,
+		port: PORT,
+		host: HOST,
+	},
 
-  plugins: [
-    new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
+	plugins: [
+		new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
 
-    new webpack.HotModuleReplacementPlugin(),
-  ],
+		new webpack.HotModuleReplacementPlugin(),
+
+		new BundleAnalyzerPlugin(),
+	],
 });
 
 module.exports = webpackDevelopment;
