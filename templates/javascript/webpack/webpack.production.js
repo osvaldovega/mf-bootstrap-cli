@@ -4,27 +4,27 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpackBaseConfig = require('./webpack.config');
 
 const webpackProduction = merge(webpackBaseConfig, {
-	output: {
-		publicPath: process.env.PUBLIC_PATH_PROD,
-	},
+  output: {
+    publicPath: process.env.PUBLIC_PATH_PROD,
+  },
 
-	mode: 'production',
+  mode: 'production',
 
-	devtool: 'source-map',
+  devtool: 'source-map',
 
-	cache: false,
+  cache: false,
 
-	performance: {
-		hints: 'error',
-		maxAssetSize: 150 * 1024, // 150 KiB
-		maxEntrypointSize: 150 * 1024, // 150 KiB
-	},
+  performance: {
+    hints: 'error',
+    maxAssetSize: 150 * 1024, // 150 KiB
+    maxEntrypointSize: 150 * 1024, // 150 KiB
+  },
 
-	optimization: {
-		minimize: true,
+  optimization: {
+    minimize: true,
 
-		minimizer: [new TerserJSPlugin(), new OptimizeCSSAssetsPlugin()],
-	},
+    minimizer: [new TerserJSPlugin(), new OptimizeCSSAssetsPlugin()],
+  },
 });
 
 module.exports = webpackProduction;

@@ -23,7 +23,7 @@ const remotes = {};
 const remotesURLs = ['https://mydomain.com/remoteEntry.js'];
 
 module.exports = {
-	exposes,
-	remotes,
-	remotesURLs,
+  exposes,
+  remotes,
+  remotesURLs,
 };
