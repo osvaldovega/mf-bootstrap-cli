@@ -1,10 +1,10 @@
 import React from 'react';
-import './styles.css';
+import styles from './app.scss';
 
 const App = () => (
-	<div className='wrapper'>
-		<h1 className='title'>Micro-Frontend Application</h1>
-		<div className='status'>
+	<div className={styles.wrapper}>
+		<h1 className={styles.title}>Micro-Frontend Application</h1>
+		<div className={styles.status}>
 			<span>JavaScript</span>
 		</div>
 	</div>

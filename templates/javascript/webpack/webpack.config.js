@@ -3,12 +3,15 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const ModuleFederationPlugin = webpack.container.ModuleFederationPlugin;
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const dotenv = require('dotenv');
 const deps = require('../package.json').dependencies;
 
-// Import and read .env file
+const { ModuleFederationPlugin } = webpack.container;
 dotenv.config();
+
+const mf = require('./moduleFerderation');
 
 // Set paths
 const APP_DIR = path.join(__dirname, '../src');
@@ -16,9 +19,52 @@ const BUILD_DIR = path.resolve(__dirname, '../dist');
 const PUBLIC_PATH = path.resolve(__dirname, '../public');
 const STATIC_PATH = path.resolve(__dirname, '../assets');
 
-const { APP_NAME, MF_NAME } = process.env;
+const { APP_NAME, MF_NAME, ANALYZER } = process.env;
 
-const webpackBaseConfig = {
+const plugins = [
+	new CleanWebpackPlugin(),
+
+	new MiniCssExtractPlugin({
+		filename: 'static/styles.css',
+		chunkFilename: 'static/styles.[contenthash].css',
+	}),
+
+	new HtmlWebpackPlugin({
+		template: path.join(PUBLIC_PATH, 'index.html'),
+		scriptLoading: 'defer',
+		title: APP_NAME,
+		favicon: path.join(PUBLIC_PATH, 'favicon.ico'),
+		manifest: path.join(PUBLIC_PATH, 'manifest.json'),
+	}),
+
+	new HtmlWebpackTagsPlugin({
+		append: true,
+		tags: mf.remotesURLs,
+		publicPath: false,
+	}),
+
+	new ModuleFederationPlugin({
+		name: MF_NAME,
+		library: { type: 'var', name: MF_NAME },
+		exposes: mf.exposes,
+		remotes: mf.remotes,
+		shared: {
+			...deps,
+			react: {
+				singleton: true,
+				requiredVersion: deps.react,
+			},
+			'react-dom': {
+				singleton: true,
+				requiredVersion: deps['react-dom'],
+			},
+		},
+	}),
+];
+
+if (ANALYZER === 'true') plugins.push(new BundleAnalyzerPlugin());
+
+module.exports = {
 	name: APP_NAME,
 
 	entry: {
@@ -27,16 +73,19 @@ const webpackBaseConfig = {
 
 	output: {
 		path: BUILD_DIR,
-		filename: '[name].bundle.js',
+		filename: 'static/[name].[contenthash].js',
+		chunkFilename: 'static/[name].[contenthash].js',
 		uniqueName: APP_NAME,
 	},
 
-	resolve: { extensions: ['.js', '.jsx', '.json', '.scss'] },
+	resolve: {
+		extensions: ['.js', '.jsx', '.json', '.scss'],
+	},
 
 	stats: {
 		chunks: true,
-		modules: false,
-		chunkModules: false,
+		modules: true,
+		chunkModules: true,
 		chunkRootModules: true,
 		chunkOrigins: true,
 	},
@@ -55,7 +104,8 @@ const webpackBaseConfig = {
 				test: /\.scss$/,
 				exclude: /node_modules/,
 				use: [
-					MiniCssExtractPlugin.loader,
+					// MiniCssExtractPlugin.loader, // There is current issue with this plugin  Webpack 5 - https://github.com/webpack-contrib/mini-css-extract-plugin/issues/487
+					'style-loader',
 					{
 						loader: 'css-loader',
 						options: {
@@ -68,81 +118,45 @@ const webpackBaseConfig = {
 			},
 			{
 				test: /\.(eot?.+|svg?.+|ttf?.+|otf?.+|woff?.+|woff2?.+)$/,
-				use: 'file-loader?name=assets/[name]-[hash].[ext]',
+				use: 'file-loader?name=assets/[name]-[contenthash].[ext]',
 			},
 			{
 				test: /\.(png|gif|jpg|svg)$/,
-				use: ['url-loader?limit=20480&name=assets/[name]-[hash].[ext]'],
+				use: ['url-loader?limit=20480&name=assets/[name]-[contenthash].[ext]'],
 				include: STATIC_PATH,
 			},
 		],
 	},
 
-	plugins: [
-		new CleanWebpackPlugin(),
-
-		new MiniCssExtractPlugin({
-			filename: '[name].bundle.css',
-			chunkFilename: '[id].bundle.css',
-		}),
-
-		new HtmlWebpackPlugin({
-			template: path.join(PUBLIC_PATH, 'index.html'),
-			scriptLoading: 'defer',
-			title: APP_NAME,
-			favicon: path.join(PUBLIC_PATH, 'favicon.ico'),
-		}),
-
-		new ModuleFederationPlugin({
-			name: MF_NAME,
-			library: { type: 'var', name: MF_NAME },
-			exposes: {},
-			remotes: {},
-			shared: {
-				...deps,
-				react: {
-					singleton: true,
-					requiredVersion: deps.react,
-				},
-				'react-dom': {
-					singleton: true,
-					requiredVersion: deps['react-dom'],
-				},
-			},
-		}),
-	],
+	plugins,
 
 	optimization: {
-		minimize: false,
+		moduleIds: 'deterministic',
 
-		runtimeChunk: 'single',
+		runtimeChunk: {
+			name: 'manifest',
+		},
 
 		splitChunks: {
-			chunks: 'all',
-
-			name: false,
-
 			cacheGroups: {
 				default: false,
 
-				common: {
-					name: 'common',
-					minChunks: 2,
+				vendor: {
+					name: 'vendor',
+					test: /[\\/]node_modules[\\/]/,
 					chunks: 'async',
-					priority: 10,
 					reuseExistingChunk: true,
 					enforce: true,
 				},
 
-				vendors: {
-					name: 'vendors',
-					test: /[\\/]node_modules[\\/]/,
-					chunks: 'all',
-					priority: 20,
+				common: {
+					name: 'common',
+					test: /[\\/]src[\\/]/,
+					chunks: 'async',
+					minSize: 0,
+					enforce: true,
 				},
 			},
 		},
 	},
 };
-
-module.exports = webpackBaseConfig;

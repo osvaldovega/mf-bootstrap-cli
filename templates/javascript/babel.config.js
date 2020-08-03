@@ -8,7 +8,7 @@ module.exports = {
 					browsers: ['last 2 versions'],
 				},
 				debug: false,
-				// useBuiltIns: "usage",
+				useBuiltIns: 'entry',
 				corejs: 3,
 			},
 		],

@@ -26,5 +26,6 @@ module.exports = {
 		semi: ['error', 'always'],
 		'dot-location': ['error', 'property'],
 		eqeqeq: ['error', 'always'],
+		'react/jsx-indent': [2, 'tab', { checkAttributes: true, indentLogicalExpressions: true }],
 	},
 };

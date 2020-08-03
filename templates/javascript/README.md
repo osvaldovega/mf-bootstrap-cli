@@ -12,24 +12,23 @@ Technologies used
 - Yarn
 - React (16.13.1)
 - React Hooks
-- Webpack (5.0.0-beta.17)
+- Webpack (5.0.0-beta.22)
 - Webpack Module Federation
 
 # Pre-requesites
 
- - yarn (any version, recommemnded v1.22.0).
- - NodeJs (any of the last version works, recommended v13.14.0 or higher).
- - ReactJS (v16, recommended 16.13.1)
- - Webpack (v5.0.0-beta.17, This specific version)
+- yarn (any version, recommemnded v1.22.0).
+- NodeJs (any of the last version works, recommended v13.14.0 or higher).
+- ReactJS (v16, recommended 16.13.1)
+- Webpack (v5.0.0-beta.22, This specific version)
 
 ## Getting Started
 
-1 - Clone the _Microfrontend Blueprint_ repository in 2 different folders, then rename one to *Guest* and the other one to *Host*:
+1 - Clone the _Microfrontend Blueprint_ repository in 2 different folders, then rename one to _Guest_ and the other one to _Host_:
 
 ```
 $ git clone git@gitlab.raisin.systems:frontend/tools/microfrontend-blueprint.git
 ```
-
 
 2 - Install the depencies (Remember to use Yarn instead of NPM, to avoid conflicts) in both applications:
 
@@ -49,10 +48,9 @@ HOST=localhost
 
 ```
 
-For instance in this tutorial we are going to create a Button that will be exposed in the *Guest*, and then consumed in the *Host*.
+For instance in this tutorial we are going to create a Button that will be exposed in the _Guest_, and then consumed in the _Host_.
 
 ## Exposing a component (Guest App)
-
 
 1- Create a Button:
 
@@ -98,9 +96,7 @@ const webpackBaseConfig = {
 
 ```
 
-
 ## Consuming a component (Host App)
-
 
 1 - Create a new component
 
@@ -154,10 +150,10 @@ export default Alert
 }
 ```
 
-2 - Add the *Guest* as a remote entry into the *Host* by changing the config of the `ModuleFederationPlugin`:
+2 - Add the _Guest_ as a remote entry into the _Host_ by changing the config of the `ModuleFederationPlugin`:
 
 ```
-// Host  
+// Host
 // webpack/webpack.config.js
 
 const webpackBaseConfig = {
@@ -175,7 +171,7 @@ const webpackBaseConfig = {
 };
 ```
 
-3 - Consume the Button from *Guest* inside *Host* by adding it in the code:
+3 - Consume the Button from _Guest_ inside _Host_ by adding it in the code:
 
 ```
 // Host
@@ -211,7 +207,7 @@ const App = () => {
 export default App;
 ```
 
-3 - Add in the *Host* `public/index.html` file the link to the remote entry or *Guest*:
+3 - Add in the _Host_ `public/index.html` file the link to the remote entry or _Guest_:
 
 ```
 // Host
@@ -224,7 +220,7 @@ export default App;
 </head>
 ```
 
-Note: The URL is composed of the location and name of the *Guest Module* which you defined before in the Guest's webpack configuration:
+Note: The URL is composed of the location and name of the _Guest Module_ which you defined before in the Guest's webpack configuration:
 
 ```
    new ModuleFederationPlugin({
