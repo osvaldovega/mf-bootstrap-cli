@@ -1,3 +1,8 @@
+const fs = require('fs');
+const path = require('path');
+
+const prettierOptions = JSON.parse(fs.readFileSync(path.resolve(__dirname, '.prettierrc'), 'utf8'));
+
 module.exports = {
 	env: {
 		es2020: true,
@@ -11,11 +16,16 @@ module.exports = {
 	plugins: ['prettier'],
 	ignorePatterns: ['/node_modules/**', '/templates/**'],
 	rules: {
-		'prettier/prettier': 'error',
-		indent: ['error', 'tab'],
 		'linebreak-style': ['error', 'unix'],
+		'no-console': ['error', { allow: ['warn', 'error'] }],
+		curly: ['error'],
+		indent: ['error', 'tab'],
 		quotes: ['error', 'single'],
 		semi: ['error', 'always'],
+		'dot-location': ['error', 'property'],
+		eqeqeq: ['error', 'always'],
+		'prettier/prettier': ['error', prettierOptions],
+		'import/no-extraneous-dependencies': 0,
 		'no-param-reassign': ['error', { props: false }],
 	},
 };

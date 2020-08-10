@@ -1,6 +1,6 @@
-# Microfrontend-Blueprint
+# Microfrontend-Application
 
-Frontend template for creating a new host webapp with guest microfrontends.
+Base Micro-Frontend application.
 
 Please read the Wiki documentation for more information about the basic concepts:
 [Raisin Wiki Page: Frontend Composition Strategy](https://raisin-jira.atlassian.net/wiki/x/TABOGQ)
@@ -9,48 +9,43 @@ Please read the Wiki documentation for more information about the basic concepts
 
 Technologies used
 
-- Yarn
 - React (16.13.1)
-- React Hooks
 - Webpack (5.0.0-beta.22)
 - Webpack Module Federation
 
 # Pre-requesites
 
-- yarn (any version, recommemnded v1.22.0).
 - NodeJs (any of the last version works, recommended v13.14.0 or higher).
 - ReactJS (v16, recommended 16.13.1)
 - Webpack (v5.0.0-beta.22, This specific version)
 
 ## Getting Started
 
-1 - Clone the _Microfrontend Blueprint_ repository in 2 different folders, then rename one to _Guest_ and the other one to _Host_:
-
-```
-$ git clone git@gitlab.raisin.systems:frontend/tools/microfrontend-blueprint.git
-```
-
-2 - Install the depencies (Remember to use Yarn instead of NPM, to avoid conflicts) in both applications:
-
-```
-$ yarn install
-```
-
-3 - Create a `.env` file with the following content in the root folder of both projects:
+1. Check and update the `.env` file:
 
 ```
 // .env
 
-// The port will define where your application will run locally, make sure to use a unique port to avoid conflicts across applications.
+# Name of the application
+APP_NAME=mf-application
 
-PORT=3000
+# Name of the Webpack Module Federation bundle
+MF_NAME=mf-application
+
+# Application port
+PORT=3001
+
+#  Use as output public path for webpack (DEVELOPMENT)
 HOST=localhost
 
+# Use as output public path for webpack (PRODUCTION)
+PUBLIC_PATH_PROD=/
+
+# Boolean variable to enable or disabled the webpack bundle analyzer
+ANALYZER=false
 ```
 
-For instance in this tutorial we are going to create a Button that will be exposed in the _Guest_, and then consumed in the _Host_.
-
-## Exposing a component (Guest App)
+## Exposing a component.
 
 1- Create a Button:
 
@@ -74,29 +69,18 @@ const Button = ({ onClick, text }) => (
 export default Button;
 ```
 
-2 - Expose the Button by changing the configuration of the `ModuleFederationPlugin`:
+2 - Expose the Button by adding the component in the file `webpack/moduleFerderation.js`:
 
 ```
-// Guest
-// webpack/webpack.config.js
+// webpack/moduleFerderation.js
 
-const webpackBaseConfig = {
-    ...otherWebpackConfigs,
-
-  plugins: [
-    new ModuleFederationPlugin({
-        name: "mfGuest",
-        library: { type: "var", name: "mfGuest" },
-        exposes: {
-            "./Button": path.join(APP_DIR, "components/button"),
-        },
-    }),
-  ],
+const exposes = {
+  "./Button": path.join(APP_DIR, "components/button"),
 };
 
 ```
 
-## Consuming a component (Host App)
+## Consuming a component
 
 1 - Create a new component
 

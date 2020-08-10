@@ -23,14 +23,14 @@ const git = {
 	type: 'confirm',
 	name: 'git',
 	message: 'Initialize a git repository?',
-	default: false,
+	default: true,
 };
 
 const install = {
 	type: 'confirm',
 	name: 'install',
 	message: 'Install project dependencies?',
-	default: false,
+	default: true,
 };
 
 const packageManager = {

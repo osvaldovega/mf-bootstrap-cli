@@ -1,4 +1,6 @@
-const { ModuleFilenameHelpers } = require('webpack');
+const path = require('path');
+
+const APP_DIR = path.join(__dirname, '../src');
 
 /**
  * Object where will be include all
@@ -20,10 +22,10 @@ const remotes = {};
  * URLs indicating the module federation file
  * e.g. 'https://www.mfGuest.com/remoteEntry.js'
  */
-const remotesURLs = ['https://mydomain.com/remoteEntry.js'];
+const remotesURLs = [];
 
 module.exports = {
-  exposes,
-  remotes,
-  remotesURLs,
+	exposes,
+	remotes,
+	remotesURLs,
 };
