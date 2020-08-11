@@ -1,29 +1,22 @@
-const { resolve } = require('path');
-
 module.exports = {
-	// preset: '/node_modules/jest/jest-preset.js',
-	collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.test.{js,jsx,ts,tsx}'],
-	coverageThreshold: {
-		global: {
-			statements: 98,
-			branches: 70,
-			functions: 98,
-			lines: 98,
-		},
-	},
-	moduleFileExtensions: ['ts', 'tsx', 'js'],
-	moduleDirectories: ['node_modules', 'src'],
-	moduleNameMapper: {
-		'.*\\.(css|less|style|scss|sass)$': 'identity-obj-proxy',
-		'@src/(.*)$': resolve(__dirname, './src/$1'),
-	},
-	setupFilesAfterEnv: ['<rootDir>/src/setupJest.js'],
-	testRegex: '.*\\.test\\.(js|ts(x?))$',
+	verbose: true,
 	transform: {
-		// '^.+\\.(ts(x?)|js)$': 'ts-jest',
+		'^.+\\.js$': 'babel-jest',
+		'^.+\\.(css|scss|less)$': 'jest-css-modules',
 	},
+	testURL: 'http://localhost',
+	testMatch: ['**/__tests__/**/*.js?(x)', '**/?(*.)(spec|test).js?(x)'],
+	testPathIgnorePatterns: [],
+	setupFiles: ['raf/polyfill', './jest/setupJest.js'],
+	modulePaths: ['<rootDir>/src', '<rootDir>/node_modules'],
 	transformIgnorePatterns: ['/node_modules/'],
-	testPathIgnorePatterns: [''],
-	snapshotSerializers: ['enzyme-to-json/serializer'],
-	watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
+	moduleNameMapper: {
+		'^.+\\.(jpg|jpeg|png|gif|eot|webp|svg|ttf|woff|woff2)$': '<rootDir>/jest/fileMock.js',
+		'^.+\\.(css|scss)$': 'identity-obj-proxy',
+		'^jest/(.*)$': '<rootDir>/jest/$1',
+	},
+	coverageReporters: ['html', 'text-summary', 'lcov'],
+	collectCoverage: true,
+	collectCoverageFrom: ['<rootDir>/src/**/*.js'],
+	watchPathIgnorePatterns: ['node_modules'],
 };
