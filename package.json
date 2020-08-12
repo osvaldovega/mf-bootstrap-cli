@@ -14,7 +14,8 @@
 	"type": "commonjs",
 	"scripts": {
 		"lint": "eslint src/",
-		"lint:fix": "eslint src/ --fix"
+		"lint:fix": "eslint src/ --fix",
+		"test": "echo \"No test specified\""
 	},
 	"keywords": [
 		"webpack",
