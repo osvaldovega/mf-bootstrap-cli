@@ -1,11 +1,11 @@
 {
-	"name": "mf-generator-cli",
-	"version": "2.0.0",
+	"name": "mf-bootstrap-cli",
+	"version": "1.0.0",
 	"description": "Bootstrap to create projects with Webpack Module Federation Plugin",
 	"main": "src/index.js",
 	"private": false,
 	"bin": {
-		"mf-generator-cli": "bin/create-project"
+		"mf-bootstrap-cli": "bin/create-project"
 	},
 	"publishConfig": {
 		"access": "public",
