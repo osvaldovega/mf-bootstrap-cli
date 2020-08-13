@@ -1,4 +1,4 @@
-# mf-generator-cli
+# mf-bootstrap-cli
 
 [![NPM version](https://img.shields.io/npm/v/mf-generator-cli.svg?style=plastic)][npm-url]
 ![APM](https://img.shields.io/apm/l/react?style=plastic)
