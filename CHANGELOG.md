@@ -46,4 +46,3 @@
 * **logMessage:**  Create a new file to manage console log messages ([88b76921](https://github.com/osvaldovega/mf-bootstrap/commit/88b76921cdfe9218edcf738bf18210d7964e9f48))
 * **index:**  Update file to improve readability ([04de3de6](https://github.com/osvaldovega/mf-bootstrap/commit/04de3de6c574dc5ae684f326a2336bfa45fa0ecf))
 * **ValidateNodeVersion:**  Move logic to a new file and import it into the index file ([2bcbc774](https://github.com/osvaldovega/mf-bootstrap/commit/2bcbc7745074605ee62ef95d78ddc122537fc5e3))
-

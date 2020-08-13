@@ -9,13 +9,17 @@
 		"mf-generator-cli": "bin/create-project"
 	},
 	"publishConfig": {
-		"access": "public"
+		"access": "public",
+		"registry": "https://registry.npmjs.org"
 	},
 	"type": "commonjs",
 	"scripts": {
 		"lint": "eslint src/",
 		"lint:fix": "eslint src/ --fix",
-		"test": "echo \"No test specified\""
+		"test": "echo \"No test specified\"",
+		"release:major": "np major",
+		"release:minor": "np minor",
+		"release:patch": "np patch"
 	},
 	"keywords": [
 		"webpack",
@@ -46,7 +50,9 @@
 		"eslint-plugin-import": "2.22.0",
 		"eslint-plugin-prettier": "3.1.4",
 		"eslint-plugin-standard": "4.0.1",
+		"generate-changelog": "1.8.0",
 		"husky": "4.2.5",
+		"np": "6.4.0",
 		"precise-commits": "1.0.2",
 		"prettier": "2.0.5"
 	},
