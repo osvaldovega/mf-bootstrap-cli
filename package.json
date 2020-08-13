@@ -1,10 +1,11 @@
 {
-	"name": "mf-generator-cli",
+	"name": "@osvaldovega/mf-generator-cli",
 	"version": "1.0.0",
 	"description": "Bootstrap to create projects with Webpack Module Federation Plugin",
 	"main": "src/index.js",
 	"private": false,
 	"bin": {
+		"@osvaldovega/mf-generator-cli": "bin/create-project",
 		"mf-generator-cli": "bin/create-project"
 	},
 	"publishConfig": {
@@ -39,7 +40,7 @@
 		"validate-npm-package-name": "3.0.0"
 	},
 	"devDependencies": {
-		"eslint": "7.5.0",
+		"eslint": "7.6.0",
 		"eslint-config-airbnb-base": "14.2.0",
 		"eslint-config-prettier": "6.11.0",
 		"eslint-plugin-import": "2.22.0",
