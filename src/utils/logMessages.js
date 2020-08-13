@@ -17,7 +17,7 @@ export const cliVersion = (version) => {
 export const cliHelp = () => {
 	console.log(`\n  ${greenBold('Options:')} \n`);
 	console.log(
-		'  -h, --help           \tprint mf-generator-cli command line options (currently set)',
+		'  -h, --help           \tprint mf-bootstrap-cli command line options (currently set)',
 	);
 	console.log('  -i, --install       \tlet the application know if the micro-frontend dependencies will be install. Is set FALSE by default');
 	console.log('  -g, --git           \tlet the application know if the micro-frontend application will be initialize with Git. Is set FALSE by default');
@@ -25,24 +25,24 @@ export const cliHelp = () => {
 	console.log('  -p, --pManager   \tpackage manager to use, npm (default) or yarn');
 	console.log('  -s, --skip          \tparameter to create a micro-frontend application using default values');
 	console.log('  -t, --template     \tmicro-frontend type of project, JavaScript (default) or TypeScript');
-	console.log('  -v, --version       \tprint mf-generator-cli version');
+	console.log('  -v, --version       \tprint mf-bootstrap-cli version');
 	console.log(`\n  ${greenBold('Examples:')} \n`);
 	console.log(`  ${whiteUnderlineBold('Init Git and install dependencies:')}\n`);
 	console.log(
-		`  $> mf-generator-cli -n ${green('myApplication')} -t ${green('JavaScript')} -p ${green(
+		`  $> mf-bootstrap-cli -n ${green('myApplication')} -t ${green('JavaScript')} -p ${green(
 			'yarn',
 		)} --git --install\n`,
 	);
 	console.log(`  ${whiteUnderlineBold('without git init application and without install dependencies')}\n`);
 	console.log(
-		`  $> mf-generator-cli -n ${green('myApplication')} -t ${green('JavaScript')} -p ${green(
+		`  $> mf-bootstrap-cli -n ${green('myApplication')} -t ${green('JavaScript')} -p ${green(
 			'yarn',
 		)}\n`,
 	);
 	console.log(`  ${whiteUnderlineBold('Default template (JS), default package manager (NPM), no init and no install dependencies:')}\n`);
-	console.log(`  $> mf-generator-cli -n ${green('myApplication')}\n`);
+	console.log(`  $> mf-bootstrap-cli -n ${green('myApplication')}\n`);
 	console.log(`  ${whiteUnderlineBold('Use default values:')}\n`);
-	console.log('  $> mf-generator-cli --skip\n');
+	console.log('  $> mf-bootstrap-cli --skip\n');
 };
 
 export const nodeVersionError = (currentNodeVersion) => {
@@ -50,7 +50,7 @@ export const nodeVersionError = (currentNodeVersion) => {
 	console.error(`\t${redUnderlineBold('ERROR')}`);
 	console.error(`\n\tYou are running ${greenBold(`Node ${currentNodeVersion}`)}`);
 	console.error(
-		`\t${blue('Micro-Frontend Bootstrap (mf-generator-cli)')} requires ${greenBold(
+		`\t${blue('Micro-Frontend Bootstrap (mf-bootstrap-cli)')} requires ${greenBold(
 			'Node 10',
 		)} or higher`,
 	);
