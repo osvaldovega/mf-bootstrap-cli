@@ -1,11 +1,11 @@
 # mf-bootstrap-cli
 
-[![NPM version](https://img.shields.io/npm/v/mf-generator-cli.svg?style=plastic)][npm-url]
+[![NPM version](https://img.shields.io/npm/v/mf-bootstrap-cli.svg?style=plastic)][npm-url]
 ![APM](https://img.shields.io/apm/l/react?style=plastic)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=plastic)](https://github.com/prettier/prettier)
-[![npm download](https://img.shields.io/npm/dm/mf-generator-cli.svg?style=plastic)][npm-url]
+[![npm download](https://img.shields.io/npm/dm/mf-bootstrap-cli.svg?style=plastic)][npm-url]
 
-[npm-url]: https://www.npmjs.com/package/mf-generator-cli
+[npm-url]: https://www.npmjs.com/package/mf-bootstrap-cli
 
 > 🚧 Working in progress
 >
@@ -55,32 +55,32 @@ Some of the settings supported by the template are:
 The package can be installed globally.
 
 ```
-npm i -g mf-generator-cli
+npm i -g mf-bootstrap-cli
 ```
 
 or you can use it by `npx`
 
 ```
-npx mf-generator-cli [options]
+npx mf-bootstrap-cli [options]
 ```
 
 ## Usage
 
 The CLI can receive the arguments inline or you can just type the package name and if there are pending mandatory options to create the project, a list of questions will be prompt to the user.
 
-These are all the available arguments that can be pass to the generator.
+These are all the available arguments that can be pass to the bootstrap CLI.
 
 ### Options
 
 ```
-  -h, --help		 print mf-generator-cli command line options (currently set)
+  -h, --help		 print mf-bootstrap-cli command line options (currently set)
   -i, --install		 let the application know if the micro-frontend dependencies will be install. Is set FALSE by default
   -g, --git		 let the application know if the micro-frontend application will be initialize with Git. Is set FALSE by default
   -n, --name		micro-frontend application name
   -p, --pManager	package manager to use, npm (default) or yarn
   -s, --skip		parameter to create a micro-frontend application using default values
   -t, --template	micro-frontend type of project, JavaScript (default) or TypeScript
-  -v, --version		print mf-generator-cli version
+  -v, --version		print mf-bootstrap-cli version
 ```
 
 ### Examples
@@ -88,25 +88,25 @@ These are all the available arguments that can be pass to the generator.
 - Init Git and install dependencies:
 
 ```
-$> mf-generator-cli -n myApplication -t JavaScript -p yarn --git --install
+$> mf-bootstrap-cli -n myApplication -t JavaScript -p yarn --git --install
 ```
 
 - without git init application and without install dependencies
 
 ```
-$> mf-generator-cli -n myApplication -t JavaScript -p yarn
+$> mf-bootstrap-cli -n myApplication -t JavaScript -p yarn
 ```
 
 - Default template (JS), default package manager (NPM), no init and no install dependencies:
 
 ```
-$> mf-generator-cli -n myApplication
+$> mf-bootstrap-cli -n myApplication
 ```
 
 - Use default values:
 
 ```
-$> mf-generator-cli --skip
+$> mf-bootstrap-cli --skip
 ```
 
 ## License
