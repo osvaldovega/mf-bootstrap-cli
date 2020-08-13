@@ -73,12 +73,12 @@ These are all the available arguments that can be pass to the generator.
 ### Options
 
 ```
-  -h, --help				print mf-generator-cli command line options (currently set)
-  -i, --install				let the application know if the micro-frontend dependencies will be install. Is set FALSE by default
-  -g, --git					let the application know if the micro-frontend application will be initialize with Git. Is set FALSE by default
+  -h, --help		 print mf-generator-cli command line options (currently set)
+  -i, --install		 let the application know if the micro-frontend dependencies will be install. Is set FALSE by default
+  -g, --git		 let the application know if the micro-frontend application will be initialize with Git. Is set FALSE by default
   -n, --name			micro-frontend application name
   -p, --pManager		package manager to use, npm (default) or yarn
-  -s, --skip				parameter to create a micro-frontend application using default values
+  -s, --skip			parameter to create a micro-frontend application using default values
   -t, --template		micro-frontend type of project, JavaScript (default) or TypeScript
   -v, --version			print mf-generator-cli version
 ```
@@ -87,29 +87,20 @@ These are all the available arguments that can be pass to the generator.
 
 - Init Git and install dependencies:
 
-      	```
-      	$> mf-generator-cli -n myApplication -t JavaScript -p yarn --git --install
-      	```
+      		$> mf-generator-cli -n myApplication -t JavaScript -p yarn --git --install
 
-- without git init application and without install dependencies
 
-  ````
-  m
-  `
+* without git init application and without install dependencies
 
-  ````
+      		$> mf-generator-cli -n myApplication -t JavaScript -p yarn
 
-- Default template (JS), default package manager (NPM), no init and no install dependencies:
+* Default template (JS), default package manager (NPM), no init and no install dependencies:
 
-      	```
-      	$> mf-generator-cli -n myApplication
-      	```
+      		$> mf-generator-cli -n myApplication
 
-- Use default values:
+* Use default values:
 
-      	```
-      $> mf-generator-cli --skip
-      	```
+      		$> mf-generator-cli --skip
 
 ## License
 
