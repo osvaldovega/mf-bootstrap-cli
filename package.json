@@ -1,10 +1,11 @@
 {
-	"name": "mf-generator-cli",
+	"name": "@ovega/mf-generator-cli",
 	"version": "1.0.0",
 	"description": "Bootstrap to create projects with Webpack Module Federation Plugin",
 	"main": "src/index.js",
 	"private": false,
 	"bin": {
+		"@ovega/mf-generator-cli": "bin/create-project",
 		"mf-generator-cli": "bin/create-project"
 	},
 	"publishConfig": {
