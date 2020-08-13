@@ -1,6 +1,6 @@
 {
 	"name": "@osvaldovega/mf-generator-cli",
-	"version": "1.2.0",
+	"version": "1.0.0",
 	"description": "Bootstrap to create projects with Webpack Module Federation Plugin",
 	"main": "src/index.js",
 	"private": false,
