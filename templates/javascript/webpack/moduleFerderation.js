@@ -17,15 +17,7 @@ const exposes = {};
  */
 const remotes = {};
 
-/**
- * Array of all the remote applications
- * URLs indicating the module federation file
- * e.g. 'https://www.mfGuest.com/remoteEntry.js'
- */
-const remotesURLs = [];
-
 module.exports = {
 	exposes,
 	remotes,
-	remotesURLs,
 };

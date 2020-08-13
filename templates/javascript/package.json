@@ -65,7 +65,6 @@
     "eslint-plugin-react": "7.20.5",
     "eslint-plugin-react-hooks": "4.0.8",
     "html-webpack-plugin": "^4.3.0",
-    "html-webpack-tags-plugin": "2.0.17",
     "identity-obj-proxy": "3.0.0",
     "jest": "26.3.0",
     "jest-css-modules": "2.1.0",

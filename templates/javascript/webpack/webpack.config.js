@@ -4,9 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const dotenv = require('dotenv');
-const deps = require('../package.json').dependencies;
+const dependencies = require('../package.json').dependencies;
 
 const { ModuleFederationPlugin } = webpack.container;
 dotenv.config();
@@ -106,28 +105,12 @@ module.exports = {
 			manifest: path.join(PUBLIC_PATH, 'manifest.json'),
 		}),
 
-		new HtmlWebpackTagsPlugin({
-			append: true,
-			tags: mf.remotesURLs,
-			publicPath: false,
-		}),
-
 		new ModuleFederationPlugin({
 			name: MF_NAME,
-			library: { type: 'var', name: MF_NAME },
+			filename: 'remoteEntry.js',
 			exposes: mf.exposes,
 			remotes: mf.remotes,
-			shared: {
-				...deps,
-				react: {
-					singleton: true,
-					requiredVersion: deps.react,
-				},
-				'react-dom': {
-					singleton: true,
-					requiredVersion: deps['react-dom'],
-				},
-			},
+			shared: dependencies,
 		}),
 
 		...extraPlugins,
