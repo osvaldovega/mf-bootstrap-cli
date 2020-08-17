@@ -2,8 +2,6 @@
 
 Frontend template for creating a new host webapp with guest microfrontends.
 
-Please read the Wiki documentation for more information about the basic concepts:
-[Raisin Wiki Page: Frontend Composition Strategy](https://raisin-jira.atlassian.net/wiki/x/TABOGQ)
 
 # Tutorial
 
@@ -24,20 +22,13 @@ Technologies used
 
 ## Getting Started
 
-1 - Clone the _Microfrontend Blueprint_ repository in 2 different folders, then rename one to *Guest* and the other one to *Host*:
-
-```
-$ git clone git@gitlab.raisin.systems:frontend/tools/microfrontend-blueprint.git
-```
-
-
-2 - Install the depencies (Remember to use Yarn instead of NPM, to avoid conflicts) in both applications:
+1 - Install the depencies (Remember to use Yarn instead of NPM, to avoid conflicts) in both applications:
 
 ```
 $ yarn install
 ```
 
-3 - Create a `.env` file with the following content in the root folder of both projects:
+2 - Create a `.env` file with the following content in the root folder of both projects:
 
 ```
 // .env

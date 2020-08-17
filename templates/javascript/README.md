@@ -2,9 +2,6 @@
 
 Base Micro-Frontend application.
 
-Please read the Wiki documentation for more information about the basic concepts:
-[Raisin Wiki Page: Frontend Composition Strategy](https://raisin-jira.atlassian.net/wiki/x/TABOGQ)
-
 # Tutorial
 
 Technologies used
