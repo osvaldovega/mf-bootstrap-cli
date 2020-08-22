@@ -21,14 +21,14 @@
 		"release:patch": "np patch"
 	},
 	"keywords": [
-		"webpack",
-		"module",
-		"federation",
+		"webpack 5",
+		"module federation",
+		"react",
 		"javascript",
+		"typescript",
 		"bootstrap",
 		"cli",
-		"create-project",
-		"react"
+		"create-project"
 	],
 	"dependencies": {
 		"arg": "4.1.3",
@@ -61,7 +61,7 @@
 		"url": "https://github.com/osvaldovega/mf-bootstrap.git"
 	},
 	"engines": {
-		"node": ">=10"
+		"node": ">=14"
 	},
 	"license": "MIT",
 	"husky": {
