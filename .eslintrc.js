@@ -14,7 +14,7 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['prettier'],
-  ignorePatterns: ['/node_modules/**', '/templates/**'],
+  ignorePatterns: ['/node_modules/**'],
   rules: {
     'linebreak-style': ['error', 'unix'],
     'no-console': ['error', { allow: ['warn', 'error'] }],

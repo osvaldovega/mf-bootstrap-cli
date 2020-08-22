@@ -38,7 +38,7 @@ module.exports = {
 		'linebreak-style': ['error', 'unix'],
 		'no-console': ['error', { allow: ['warn', 'error'] }],
 		curly: ['error', 'multi'],
-		indent: ['error', 'tab'],
+		indent: ['error', 2],
 		quotes: ['error', 'single'],
 		semi: ['error', 'always'],
 		'dot-location': ['error', 'property'],
