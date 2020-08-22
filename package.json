@@ -1,6 +1,6 @@
 {
 	"name": "mf-bootstrap-cli",
-	"version": "1.3.0",
+	"version": "1.4.0",
 	"description": "Bootstrap to create projects with Webpack Module Federation Plugin",
 	"main": "src/index.js",
 	"private": false,
