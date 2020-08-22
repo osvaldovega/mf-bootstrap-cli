@@ -1,37 +1,32 @@
-const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const ModuleFederationPlugin = webpack.container.ModuleFederationPlugin;
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const dotenv = require('dotenv');
-const deps = require('../package.json').dependencies;
+const dependencies = require('../package.json').dependencies;
+const mf = require('./moduleFerderation');
+const { APP_DIR, BUILD_DIR, STATIC_PATH, includePathFromPublic } = require('./paths');
 
-// Import and read .env file
+const { ModuleFederationPlugin } = webpack.container;
 dotenv.config();
 
-// Set paths
-const APP_DIR = path.join(__dirname, '../src');
-const BUILD_DIR = path.resolve(__dirname, '../dist');
-const PUBLIC_PATH = path.resolve(__dirname, '../public');
-const STATIC_PATH = path.resolve(__dirname, '../assets');
+// eslint-disable-next-line camelCase
+const { APP_NAME, MF_NAME, NODE_ENV, npm_package_config_analyze } = process.env;
+// eslint-disable-next-line camelCase
+const extraPlugins = npm_package_config_analyze === 'true' ? [new BundleAnalyzerPlugin()] : [];
 
-const { APP_NAME, MF_NAME } = process.env;
-
-const webpackBaseConfig = {
+module.exports = {
 	name: APP_NAME,
-
-	entry: {
-		app: path.join(APP_DIR, 'index.js'),
-	},
 
 	output: {
 		path: BUILD_DIR,
-		filename: '[name].bundle.js',
 		uniqueName: APP_NAME,
 	},
 
-	resolve: { extensions: ['.js', '.jsx', '.json', '.scss'] },
+	resolve: {
+		extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.scss'],
+	},
 
 	stats: {
 		chunks: true,
@@ -44,7 +39,9 @@ const webpackBaseConfig = {
 	module: {
 		rules: [
 			{
-				test: /\.(js|jsx|tsx)$/,
+				test: /\.(js|jsx|ts|tsx)$/,
+				exclude: /node_modules/,
+				include: APP_DIR,
 				use: { loader: 'babel-loader' },
 			},
 			{
@@ -53,13 +50,21 @@ const webpackBaseConfig = {
 			},
 			{
 				test: /\.scss$/,
+				exclude: /node_modules/,
 				use: [
-					MiniCssExtractPlugin.loader,
+					'style-loader',
+					// {
+					// 	loader: MiniCssExtractPlugin.loader, // There is current issue with this plugin  Webpack 5 - https://github.com/webpack-contrib/mini-css-extract-plugin/issues/487
+					// 	// enable HMR only in dev
+					// 	options: {
+					// 		hmr: NODE_ENV === 'development',
+					// 	},
+					// },
 					{
 						loader: 'css-loader',
 						options: {
+							modules: { localIdentName: '[local]___[hash:base64:5]' },
 							importLoaders: 1,
-							modules: true,
 						},
 					},
 					'sass-loader',
@@ -67,70 +72,75 @@ const webpackBaseConfig = {
 			},
 			{
 				test: /\.(eot?.+|svg?.+|ttf?.+|otf?.+|woff?.+|woff2?.+)$/,
-				use: 'file-loader?name=assets/[name]-[hash].[ext]',
+				use: 'file-loader?name=assets/[name]-[contenthash].[ext]',
 			},
 			{
 				test: /\.(png|gif|jpg|svg)$/,
-				use: ['url-loader?limit=20480&name=assets/[name]-[hash].[ext]'],
+				use: ['url-loader?limit=20480&name=assets/[name]-[contenthash].[ext]'],
 				include: STATIC_PATH,
 			},
 		],
 	},
 
 	plugins: [
+		new webpack.ProgressPlugin(),
+
 		new CleanWebpackPlugin(),
 
 		new MiniCssExtractPlugin({
-			filename: '[name].bundle.css',
-			chunkFilename: '[id].bundle.css',
+			filename: 'static/[name].bundle.css',
+			chunkFilename: 'static/[id].bundle.css',
 		}),
 
 		new HtmlWebpackPlugin({
-			template: path.join(PUBLIC_PATH, 'index.html'),
+			template: includePathFromPublic('index.html'),
 			scriptLoading: 'defer',
 			title: APP_NAME,
+			favicon: includePathFromPublic('favicon.ico'),
+			manifest: includePathFromPublic('manifest.json'),
 		}),
 
 		new ModuleFederationPlugin({
 			name: MF_NAME,
-			library: { type: 'var', name: MF_NAME },
-			exposes: {},
-			remotes: {},
-			shared: {
-				...deps,
-				react: {
-					singleton: true,
-					requiredVersion: deps.react,
-				},
-				'react-dom': {
-					singleton: true,
-					requiredVersion: deps['react-dom'],
-				},
-			},
+			filename: 'remoteEntry.js',
+			exposes: mf.exposes,
+			remotes: mf.remotes,
+			shared: dependencies,
 		}),
+
+		...extraPlugins,
 	],
 
 	optimization: {
 		moduleIds: 'deterministic',
-		chunkIds: 'deterministic',
-		removeAvailableModules: true,
-		removeEmptyChunks: true,
-		mergeDuplicateChunks: true,
-		flagIncludedChunks: true,
-		usedExports: true,
-		concatenateModules: true,
+
 		splitChunks: {
-			chunks: 'all',
 			cacheGroups: {
+				default: false,
+
 				vendor: {
-					test: /node_modules/,
 					name: 'vendor',
-					chunks: 'initial',
+					test: /[\\/]node_modules[\\/]/,
+					chunks: 'async',
+					reuseExistingChunk: true,
+					enforce: true,
+				},
+
+				common: {
+					name: 'common',
+					test: /[\\/]src[\\/]/,
+					chunks: 'async',
+					minSize: 0,
+					enforce: true,
+				},
+
+				styles: {
+					name: 'styles',
+					test: /\.css$/,
+					chunks: 'all',
 					enforce: true,
 				},
 			},
 		},
 	},
 };
-
-module.exports = webpackBaseConfig;

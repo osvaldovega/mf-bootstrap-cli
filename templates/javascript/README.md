@@ -1,211 +1,206 @@
 # Microfrontend-Application
 
-Base Micro-Frontend application.
-
-# Tutorial
-
-Technologies used
-
-- React (16.13.1)
-- Webpack (5.0.0-beta.22)
-- Webpack Module Federation
+Micro-Frontend basic template.
 
 # Pre-requesites
 
-- NodeJs (any of the last version works, recommended v13.14.0 or higher).
-- ReactJS (v16, recommended 16.13.1)
-- Webpack (v5.0.0-beta.22, This specific version)
+- Node v12.18.3 or higher.
+- NPM v6.14.6 or higher.
+- Yarn v1.22.4 or higher.
 
-## Getting Started
+# Usage
 
-1. Check and update the `.env` file:
+- To run/start the project run.
 
-```
-// .env
+  ```
+  $ yarn start
+  ```
 
-# Name of the application
-APP_NAME=mf-application
+- To build the project run.
 
-# Name of the Webpack Module Federation bundle
-MF_NAME=mf-application
+  ```
+  $ yarn build
+  ```
 
-# Application port
-PORT=3001
+- To run the tests.
+  ```
+  $ yarn test
+  ```
 
-#  Use as output public path for webpack (DEVELOPMENT)
-HOST=localhost
+- To run the test on watch mode.
+  ```
+  $ yarn test:watch
+  ```
 
-# Use as output public path for webpack (PRODUCTION)
-PUBLIC_PATH_PROD=/
+- To run eslint on the project.
+  ```
+  $ yarn lint
+  ```
 
-# Boolean variable to enable or disabled the webpack bundle analyzer
-ANALYZER=false
-```
-
-## Exposing a component.
-
-1- Create a Button:
-
-```
-// Guest
-// src
-
-$ mkdir -p src/components/button
-$ cd src/components/button && touch index.js
-```
+These are the available scripts:
 
 ```
-// src/components/button/index.js
+"start": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack/webpack.development.js",
 
-import React from "react";
+"build": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.production.js",
 
-const Button = ({ onClick, text }) => (
-  <button onClick={onClick}>{text}</button>
-);
+"lint": "eslint --ext .ts,.tsx,.js,.jsx --no-error-on-unmatched-pattern src/",
 
-export default Button;
+"lint:fix": "eslint --ext .ts,.tsx,.js,.jsx --no-error-on-unmatched-pattern --quiet --fix",
+
+"pretest": "yarn test:clean && yarn lint",
+
+"test:clean": "rimraf ./coverage",
+
+"test": "cross-env NODE_ENV=test jest --config jest.config.js --coverage",
+
+"test:watch": "cross-env NODE_ENV=test jest --watchAll",
+
+"prettify": "prettier . --write"
 ```
 
-2 - Expose the Button by adding the component in the file `webpack/moduleFerderation.js`:
+# Getting Started
 
-```
-// webpack/moduleFerderation.js
+1. Install project dependencies:
 
-const exposes = {
-  "./Button": path.join(APP_DIR, "components/button"),
-};
+   ```
+   $ yarn install
+   ```
 
-```
+2. Open and check the `.env` file and update the port, project name, and micro-frontend name if you want to, if not you can use default ones:
 
-## Consuming a component
+   ```
+   // .env
 
-1 - Create a new component
+	# Name of the application
+	APP_NAME=mfApplication
 
-```
-// Host
-// src
+	# Name of the Webpack Module Federation bundle
+	MF_NAME=mfApplication
 
-$ mkdir -p src/components/alert
-$ cd src/components/alert && touch index.js styles.scss
-```
+	# Application port
+	PORT=3001
 
-```
-// Host
-// src/components/alert/index.js
+	#  Use as output public path for webpack (DEVELOPMENT)
+	HOST=localhost
 
-import React from "react";
-import styles from "./styles.scss";
+	# Use as output public path for webpack (PRODUCTION)
+	PUBLIC_PATH_PROD=/
+   ```
 
-const Alert = ({ error }) => {
-  return (
-    <div className={styles.alert}>
-        <div className={error ? styles.errorAlert : styles.successAlert}>
-        { error ? "Something went wrong" : "Everything in the world is fine" }
-        </div>
-    </div>
-  );
-};
+3. Start the project running the command.
+   ```
+   $ yarn start
+   ```
 
-export default Alert
-```
+# Expose/Export assets through Webpack Module Federation (Plugin).
 
-```
-// Host
-// src/components/alert/styles.scss
+To expose any type of assets or element using the MF plugin, first check that your local project runs properly locally. After this, you can share/expose any asset or element in the following way.
 
-.alert {
-  max-width: 320px;
-  margin: 20px 0;
-}
+1. Open the `webpack/moduleFederation.js` file, should look like this:
 
-.errorAlert {
-  padding: 20px;
-  color: #e6411a;
-  background-color: #fae6e4;
-}
+   ```
+   const { includePathFromSrc } = require('./paths');
 
-.successAlert {
-  padding: 20px;
-  color: #007300;
-  background-color: #e5f8e0;
-}
-```
+	/**
+	* Object where will be include all
+	* components, logic and shared files
+	* e.g './Button': includePathFromSrc('component/Button/index.js')
+	*/
+	const exposes = {};
 
-2 - Add the _Guest_ as a remote entry into the _Host_ by changing the config of the `ModuleFederationPlugin`:
+	/**
+	* Object with the names of remotes files
+	* module federation bundle files to include
+	* in the application.
+	* e.g <remote name>: '<MF_NAME>@http://localhost:<PORT>/static/remoteEntry.js'
+	* e.g mfRemote: 'mfRemote@http://localhost:3002/static/remoteEntry.js'
+	*/
+	const remotes = {};
 
-```
-// Host
-// webpack/webpack.config.js
+	module.exports = {
+		exposes,
+		remotes,
+	};
+   ```
 
-const webpackBaseConfig = {
-    ...otherWebpackConfigs,
+2. Edit the file and add the list or assets inside the `exposes` object:
 
-  plugins: [
-    new ModuleFederationPlugin({
-      name: "mfHost",
-      library: { type: "var", name: "mfHost" },
-      remotes: {
-        mfGuest: "mfGuest",
-      },
-    }),
-  ],
-};
-```
+   ```
+   /**
+   * Object where will be include all
+   * components, logic and shared files
+   * e.g './Button': includePathFromSrc('component/Button/index.js')
+   */
+   const exposes = {
+   	'./<asset name>': includePathFromSrc('path/of/your/element'),
+   	'./<asset name>': includePathFromSrc('path/of/your/element'),
+   };
+   ```
 
-3 - Consume the Button from _Guest_ inside _Host_ by adding it in the code:
+   > NOTE: Please be sure to add always a dot and slash before the asset name. e.g `./MyButton` and the elements to share will be always inside `src/` directory.
 
-```
-// Host
-// src/App.js
+3. Restart the application.
 
-import React, { Suspense, useState } from "react";
-import Button from "mfGuest/Button"; // <-- this is how to import a MF component
-import Alert from "./components/alert";
+4. To confirm that the assets are properly exposed through the MF plugin, the project should run properly locally and see if the module was created properly run the URL.
 
-const App = () => {
-  const [error, setError] = useState(false);
+   ```
+   http://localhost:3001/static/remoteEntry.js
+   ```
 
-  const triggerError = () => setError(true);
-  const resetError = () => setError(false);
+   > NOTE: The port is the same value that you set in the `.env` file and the remote entry file should load without any problem.
 
-  return (
-    <>
-      <h1>Host App</h1>
+# Consume/Import assets through Webpack Module Federation (Plugin).
 
-      <Button onClick={triggerError} text={"Generate error"} />
+1. Confirm that the project is running properly locally.
+2. Open the `webpack/moduleFederation.js` file, should look like this:
+	```
+	const { includePathFromSrc } = require('./paths');
 
-      <Button
-        style={{ marginLeft: "20px" }}
-        onClick={resetError}
-        text={"Remove error"}
-      />
+	/**
+	* Object where will be include all
+	* components, logic and shared files
+	* e.g './Button': includePathFromSrc('component/Button/index.js')
+	*/
+	const exposes = {};
 
-      <Alert error={error} />
-    </>
-  );
-};
+	/**
+	* Object with the names of remotes files
+	* module federation bundle files to include
+	* in the application.
+	* e.g <remote name>: '<MF_NAME>@http://localhost:<PORT>/static/remoteEntry.js'
+	* e.g mfRemote: 'mfRemote@http://localhost:3002/static/remoteEntry.js'
+	*/
+	const remotes = {};
 
-export default App;
-```
+	module.exports = {
+		exposes,
+		remotes,
+	};
+   ```
+3. Edit the file and add inside the `remotes` object the reference to the assets you need to import.
+  
+	```
+	/**
+	* Object with the names of remotes files
+	* module federation bundle files to include
+	* in the application.
+	* e.g <remote name>: '<MF_NAME>@http://localhost:<PORT>/static/remoteEntry.js'
+	* e.g mfRemote: 'mfRemote@http://localhost:3002/static/remoteEntry.js'
+	*/
+   const remotes = {
+		 <module federation name>: '<module federation name>@<URL>:<port>/remoteEntry.js'
+	 };
+	```
 
-3 - Add in the _Host_ `public/index.html` file the link to the remote entry or _Guest_:
+	> NOTE: The module federation name, is the name used for the other micro-frontend application inside the `.env` file, the variable name is `MF_NAME`.
+	> In case you are pointing to the production URL, you need to use the `module federation name`, domain and the remoteEntry.js, like this: `mfApplication: 'mfApplication@<production URL>/remoteEntry.js'`
 
-```
-// Host
-// public/index.html
+4. Restart the application and confirm the application is still running properly.
+5. To start using the remote entry in your application go to the file that you need to import the assets and import it in the following way
+	```
+	const <asset name> = React.lazy(() => import('mfApplication/<asset name>'));
+	```
 
-<head>
-    <!-- ...  -->
-    <!-- Link to the remote entry (Guest) -->
-    <script src="http://localhost:3000/mfGuest.bundle.js"></script>
-</head>
-```
+	> Remember: `mfApplication` is the value that you assign to the remote entry in your application inside the `webpack/moduleFederation.js` file in the remotes section.
 
-Note: The URL is composed of the location and name of the _Guest Module_ which you defined before in the Guest's webpack configuration:
-
-```
-   new ModuleFederationPlugin({
-      name: "mfGuest",
-    }),
-
-```

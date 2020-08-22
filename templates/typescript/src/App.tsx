@@ -1,5 +1,6 @@
 import React from 'react';
+import Home from './pages/Home';
 
-const App = () => <div>Template App</div>;
+const App: React.FC = () => <Home />;
 
 export default App;

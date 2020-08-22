@@ -6,18 +6,18 @@ import promptQuestions from './questions';
  * @return {Array} Options to display in prompt
  */
 export const filterOptions = (options) => {
-	const filteredOptions = { ...options };
+  const filteredOptions = { ...options };
 
-	delete filteredOptions.version;
-	delete filteredOptions.help;
-	delete filteredOptions.skipPrompts;
+  delete filteredOptions.version;
+  delete filteredOptions.help;
+  delete filteredOptions.skipPrompts;
 
-	const optionsToPrompt = Object.keys(filteredOptions).reduce((stack, property) => {
-		if (!filteredOptions[property]) stack.push(property);
-		return stack;
-	}, []);
+  const optionsToPrompt = Object.keys(filteredOptions).reduce((stack, property) => {
+    if (!filteredOptions[property]) stack.push(property);
+    return stack;
+  }, []);
 
-	return optionsToPrompt;
+  return optionsToPrompt;
 };
 
 /**
@@ -30,6 +30,6 @@ export const filterOptions = (options) => {
 export const optionsToPrompt = (options) => options.map((option) => promptQuestions[option]);
 
 export default {
-	filterOptions,
-	optionsToPrompt,
+  filterOptions,
+  optionsToPrompt,
 };

@@ -10,14 +10,14 @@ import { DEFAULT_NAME, DEFAULT_TEMPLATE, DEFAULT_PACKAGE_MANAGER } from './const
  * Node version should be equal or higher than v10
  */
 export const validateNodeVersion = () => {
-	const currentNodeVersion = process.versions.node;
-	const semver = currentNodeVersion.split('.');
-	const [major] = semver;
+  const currentNodeVersion = process.versions.node;
+  const semver = currentNodeVersion.split('.');
+  const [major] = semver;
 
-	if (major < 10) {
-		nodeVersionError(currentNodeVersion);
-		process.exit(1);
-	}
+  if (major < 10) {
+    nodeVersionError(currentNodeVersion);
+    process.exit(1);
+  }
 };
 
 /**
@@ -29,42 +29,42 @@ export const validateNodeVersion = () => {
  * @return {Object} Option with the values entered by user
  */
 export const validateMissingPromptOptions = async (options) => {
-	if (options.version) {
-		cliVersion(version);
-		return;
-	}
+  if (options.version) {
+    cliVersion(version);
+    return;
+  }
 
-	if (options.help) {
-		cliHelp(version);
-		return;
-	}
+  if (options.help) {
+    cliHelp(version);
+    return;
+  }
 
-	if (options.skipPrompts) {
-		// eslint-disable-next-line consistent-return
-		return {
-			...options,
-			appName: options.appName || DEFAULT_NAME,
-			template: options.template || DEFAULT_TEMPLATE,
-			packageManager: options.packageManager || DEFAULT_PACKAGE_MANAGER,
-		};
-	}
+  if (options.skipPrompts) {
+    // eslint-disable-next-line consistent-return
+    return {
+      ...options,
+      appName: options.appName || DEFAULT_NAME,
+      template: options.template || DEFAULT_TEMPLATE,
+      packageManager: options.packageManager || DEFAULT_PACKAGE_MANAGER,
+    };
+  }
 
-	const filteredOptions = filterOptions(options);
-	const questions = optionsToPrompt(filteredOptions);
-	const answers = await inquirer.prompt(questions);
+  const filteredOptions = filterOptions(options);
+  const questions = optionsToPrompt(filteredOptions);
+  const answers = await inquirer.prompt(questions);
 
-	// eslint-disable-next-line consistent-return
-	return {
-		...options,
-		appName: options.appName || answers.appName,
-		git: options.git || answers.git,
-		template: options.template || answers.template,
-		install: options.install || answers.install,
-		packageManager: options.packageManager || answers.packageManager,
-	};
+  // eslint-disable-next-line consistent-return
+  return {
+    ...options,
+    appName: options.appName || answers.appName,
+    git: options.git || answers.git,
+    template: options.template || answers.template,
+    install: options.install || answers.install,
+    packageManager: options.packageManager || answers.packageManager,
+  };
 };
 
 export default {
-	validateMissingPromptOptions,
-	validateNodeVersion,
+  validateMissingPromptOptions,
+  validateNodeVersion,
 };

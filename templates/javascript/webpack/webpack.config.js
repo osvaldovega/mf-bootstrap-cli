@@ -1,4 +1,3 @@
-const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -6,21 +5,15 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const dotenv = require('dotenv');
 const dependencies = require('../package.json').dependencies;
+const mf = require('./moduleFerderation');
+const { APP_DIR, BUILD_DIR, STATIC_PATH, includePathFromPublic } = require('./paths');
 
 const { ModuleFederationPlugin } = webpack.container;
 dotenv.config();
 
-const mf = require('./moduleFerderation');
-
-// Set paths
-const APP_DIR = path.join(__dirname, '../src');
-const BUILD_DIR = path.resolve(__dirname, '../dist');
-const PUBLIC_PATH = path.resolve(__dirname, '../public');
-const STATIC_PATH = path.resolve(__dirname, '../assets');
-
-// eslint-disable-next-line camelcase
+// eslint-disable-next-line camelCase
 const { APP_NAME, MF_NAME, NODE_ENV, npm_package_config_analyze } = process.env;
-// eslint-disable-next-line camelcase
+// eslint-disable-next-line camelCase
 const extraPlugins = npm_package_config_analyze === 'true' ? [new BundleAnalyzerPlugin()] : [];
 
 module.exports = {
@@ -90,6 +83,8 @@ module.exports = {
 	},
 
 	plugins: [
+		new webpack.ProgressPlugin(),
+
 		new CleanWebpackPlugin(),
 
 		new MiniCssExtractPlugin({
@@ -98,11 +93,11 @@ module.exports = {
 		}),
 
 		new HtmlWebpackPlugin({
-			template: path.join(PUBLIC_PATH, 'index.html'),
+			template: includePathFromPublic('index.html'),
 			scriptLoading: 'defer',
 			title: APP_NAME,
-			favicon: path.join(PUBLIC_PATH, 'favicon.ico'),
-			manifest: path.join(PUBLIC_PATH, 'manifest.json'),
+			favicon: includePathFromPublic('favicon.ico'),
+			manifest: includePathFromPublic('manifest.json'),
 		}),
 
 		new ModuleFederationPlugin({
