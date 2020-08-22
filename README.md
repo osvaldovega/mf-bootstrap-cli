@@ -75,9 +75,9 @@ These are all the available arguments that can be pass to the bootstrap CLI.
 -g, --git					let the application know if the micro-frontend application will be initialize with Git. Is set TRUE by default
 -n, --name				micro-frontend application name
 -p, --pManager		package manager to use, yarn (default) or npm
--s, --skip				parameter to create a micro-frontend application using default values
--t, --template		micro-frontend type of project, JavaScript (default) or TypeScript
--v, --version			print mf-bootstrap-cli version
+-s, --skip      parameter to create a micro-frontend application using default values
+-t, --template      micro-frontend type of project, JavaScript (default) or TypeScript
+-v, --version     print mf-bootstrap-cli version
 ```
 
 ### Examples
