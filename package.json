@@ -58,7 +58,7 @@
 	"author": "Osvaldo Vega A (OvEgA)",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/osvaldovega/mf-bootstrap.git"
+		"url": "git@github.com:osvaldovega/mf-bootstrap-cli.git"
 	},
 	"engines": {
 		"node": ">=14"
