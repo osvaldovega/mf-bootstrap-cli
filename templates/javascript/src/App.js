@@ -1,13 +1,6 @@
 import React from 'react';
-import styles from './styles/app.scss';
+import Home from './pages/Home';
 
-const App = () => (
-	<div className={styles.wrapper}>
-		<h1 className={styles.title}>Micro-Frontend Application</h1>
-		<div className={styles.status}>
-			<span>JavaScript</span>
-		</div>
-	</div>
-);
+const App = () => <Home />;
 
 export default App;

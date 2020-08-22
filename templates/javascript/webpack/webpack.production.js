@@ -1,17 +1,16 @@
 const path = require('path');
-const { HashedModuleIdsPlugin } = require('webpack');
 const { merge } = require('webpack-merge');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const webpackBaseConfig = require('./webpack.config');
+const { includePathFromSrc } = require('./paths');
 
-const { PUBLIC_PATH_PROD } = process.env;
-const APP_DIR = path.join(__dirname, '../src');
+const {PUBLIC_PATH_PROD } = process.env;
 
 const webpackProduction = merge(webpackBaseConfig, {
 	entry: {
-		app: path.join(APP_DIR, 'index.js'),
+		app: includePathFromSrc('index.js'),
 	},
 
 	output: {
@@ -37,12 +36,6 @@ const webpackProduction = merge(webpackBaseConfig, {
 			threshold: 10240,
 			minRatio: 0.8,
 		}),
-
-		// new HashedModuleIdsPlugin({
-		// 	hashFunction: 'sha256',
-		// 	hashDigest: 'hex',
-		// 	hashDigestLength: 20,
-		// }),
 	],
 
 	optimization: {

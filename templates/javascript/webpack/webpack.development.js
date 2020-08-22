@@ -1,17 +1,15 @@
-const path = require('path');
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const webpackBaseConfig = require('./webpack.config');
+const { BUILD_DIR, includePathFromSrc } = require('./paths');
 
 const { PORT, HOST } = process.env;
-const BUILD_DIR = path.resolve(__dirname, 'dist');
-const APP_DIR = path.join(__dirname, '../src');
 
 const webpackDevelopment = merge(webpackBaseConfig, {
 	entry: {
-		app: ['core-js/stable', 'regenerator-runtime/runtime', path.join(APP_DIR, 'index.js')],
+		app: ['core-js/stable', 'regenerator-runtime/runtime', includePathFromSrc('index.js')],
 	},
 
 	// Don't use hashes in dev mode for better performance
@@ -40,11 +38,10 @@ const webpackDevelopment = merge(webpackBaseConfig, {
 		port: PORT,
 		host: HOST,
 		compress: true,
+		open: true,
 	},
 
 	plugins: [
-		new webpack.ProgressPlugin(),
-
 		new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
 
 		new webpack.HotModuleReplacementPlugin(),

@@ -1,24 +1,20 @@
 module.exports = {
-  presets: [
-    [
-      "@babel/preset-env",
-      {
-        modules: false,
-        targets: {
-          browsers: ["last 2 versions"],
-        },
-        debug: false,
-        // useBuiltIns: "usage",
-        corejs: 3,
-      },
-    ],
-    "@babel/preset-react",
-  ],
-  plugins: [
-    "@babel/plugin-syntax-dynamic-import",
-    "@babel/plugin-syntax-import-meta",
-    "@babel/plugin-proposal-class-properties",
-    "@babel/plugin-proposal-function-sent",
-    "@babel/plugin-proposal-export-namespace-from",
-  ],
+	presets: [
+		['@babel/preset-env', { modules: false }],
+		'@babel/preset-typescript',
+		'@babel/preset-react',
+	],
+
+	plugins: [
+		'react-hot-loader/babel',
+		'@babel/plugin-proposal-class-properties',
+		'@babel/plugin-syntax-dynamic-import',
+		// '@babel/plugin-proposal-object-rest-spread',
+	],
+
+	env: {
+		test: {
+			plugins: ['@babel/plugin-transform-modules-commonjs', 'dynamic-import-node'],
+		},
+	},
 };

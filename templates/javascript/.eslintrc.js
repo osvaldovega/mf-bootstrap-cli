@@ -10,11 +10,14 @@ module.exports = {
 		node: true,
 		es6: true,
 	},
+
 	extends: ['plugin:react/recommended', 'airbnb', 'prettier'],
+
 	globals: {
 		Atomics: 'readonly',
 		SharedArrayBuffer: 'readonly',
 	},
+
 	parserOptions: {
 		ecmaFeatures: {
 			jsx: true,
@@ -22,7 +25,9 @@ module.exports = {
 		ecmaVersion: 2020,
 		sourceType: 'module',
 	},
+
 	plugins: ['react', 'prettier', 'react-hooks', 'jsx-a11y'],
+
 	rules: {
 		'linebreak-style': ['error', 'unix'],
 		'no-console': ['error', { allow: ['warn', 'error'] }],

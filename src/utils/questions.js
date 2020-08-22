@@ -37,7 +37,7 @@ const packageManager = {
 	type: 'list',
 	name: 'packageManager',
 	message: 'Please choose which package manager to use',
-	choices: ['npm', 'yarn'],
+	choices: ['yarn', 'npm'],
 	default: DEFAULT_PACKAGE_MANAGER,
 };
 
