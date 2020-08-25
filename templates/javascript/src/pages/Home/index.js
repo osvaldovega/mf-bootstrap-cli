@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../styles/app.scss';
+import styles from 'styles/app.scss';
 
 const Home = () => (
 	<div className={styles.wrapper}>

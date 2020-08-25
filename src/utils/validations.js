@@ -16,6 +16,7 @@ export const validateNodeVersion = () => {
 
   if (major < 10) {
     nodeVersionError(currentNodeVersion);
+    // eslint-disable-next-line no-process-exit
     process.exit(1);
   }
 };

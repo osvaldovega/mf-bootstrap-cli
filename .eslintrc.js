@@ -4,17 +4,24 @@ const path = require('path');
 const prettierOptions = JSON.parse(fs.readFileSync(path.resolve(__dirname, '.prettierrc'), 'utf8'));
 
 module.exports = {
+  parser: 'babel-eslint',
+
   env: {
     es2020: true,
     node: true,
   },
-  extends: ['airbnb-base', 'prettier'],
+
+  extends: ['eslint:recommended', 'airbnb-base', 'node', 'prettier'],
+
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: 'module',
   },
+
   plugins: ['prettier'],
+
   ignorePatterns: ['/node_modules/**'],
+
   rules: {
     'linebreak-style': ['error', 'unix'],
     'no-console': ['error', { allow: ['warn', 'error'] }],
@@ -27,5 +34,7 @@ module.exports = {
     'prettier/prettier': ['error', prettierOptions],
     'import/no-extraneous-dependencies': 0,
     'no-param-reassign': ['error', { props: false }],
+    'import/no-commonjs': [0],
+    'no-sync': ['error', { allowAtRootLevel: true }],
   },
 };

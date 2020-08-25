@@ -38,8 +38,9 @@ module.exports = {
 		'dot-location': ['error', 'property'],
 		eqeqeq: ['error', 'always'],
 		'react/jsx-filename-extension': 0,
-		'react/jsx-indent': [2, 'tab', { checkAttributes: true, indentLogicalExpressions: true }],
+		'react/jsx-indent': [2, 2, { checkAttributes: true, indentLogicalExpressions: true }],
 		'prettier/prettier': ['error', prettierOptions],
 		'import/no-extraneous-dependencies': 0,
+		'import/no-unresolved': [0, { caseSensitive: false }],
 	},
 };

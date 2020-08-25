@@ -5,15 +5,22 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const dotenv = require('dotenv');
 const dependencies = require('../package.json').dependencies;
-const mf = require('./moduleFerderation');
-const { APP_DIR, BUILD_DIR, STATIC_PATH, includePathFromPublic } = require('./paths');
+const mf = require('./moduleFederation');
+const {
+	APP_DIR,
+	BUILD_DIR,
+	ASSETS_PATH,
+	includePathFromPublic,
+	includePathFromAssets,
+	includePathFromSrc,
+} = require('./paths');
 
 const { ModuleFederationPlugin } = webpack.container;
 dotenv.config();
 
-// eslint-disable-next-line camelCase
+// eslint-disable-next-line camelcase
 const { APP_NAME, MF_NAME, NODE_ENV, npm_package_config_analyze } = process.env;
-// eslint-disable-next-line camelCase
+// eslint-disable-next-line camelcase
 const extraPlugins = npm_package_config_analyze === 'true' ? [new BundleAnalyzerPlugin()] : [];
 
 module.exports = {
@@ -26,6 +33,14 @@ module.exports = {
 
 	resolve: {
 		extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.scss'],
+		alias: {
+			components: includePathFromSrc('components'),
+			fonts: includePathFromAssets('fonts'),
+			images: includePathFromAssets('images'),
+			pages: includePathFromSrc('pages'),
+			routes: includePathFromSrc('routes'),
+			styles: includePathFromSrc('styles'),
+		},
 	},
 
 	stats: {
@@ -72,12 +87,28 @@ module.exports = {
 			},
 			{
 				test: /\.(eot?.+|svg?.+|ttf?.+|otf?.+|woff?.+|woff2?.+)$/,
-				use: 'file-loader?name=assets/[name]-[contenthash].[ext]',
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+							name: 'assets/fonts/[name]-[contenthash].[ext]',
+						},
+					},
+				],
+				include: ASSETS_PATH,
 			},
 			{
-				test: /\.(png|gif|jpg|svg)$/,
-				use: ['url-loader?limit=20480&name=assets/[name]-[contenthash].[ext]'],
-				include: STATIC_PATH,
+				test: /\.(png|gif|jp(e*)g|svg)$/,
+				use: [
+					{
+						loader: 'url-loader',
+						options: {
+							limit: 8 * 1024,
+							name: 'assets/images/[name]-[contenthash].[ext]',
+						},
+					},
+				],
+				include: ASSETS_PATH,
 			},
 		],
 	},

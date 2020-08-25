@@ -106,6 +106,7 @@ const createProject = async (options) => {
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error();
+    // eslint-disable-next-line no-process-exit
     process.exit(1);
   }
 
