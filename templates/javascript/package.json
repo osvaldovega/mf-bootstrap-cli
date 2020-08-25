@@ -7,7 +7,7 @@
     "Webpack",
     "Module",
     "Federation",
-    "javascript",
+    "javascript"
   ],
   "config": {
     "analyze": false
