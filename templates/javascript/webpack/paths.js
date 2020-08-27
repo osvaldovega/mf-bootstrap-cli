@@ -13,12 +13,12 @@ const includePathFromAssets = (relativePath) => join(ASSETS_PATH, relativePath);
 const includePathFromDist = (relativePath) => join(BUILD_DIR, relativePath);
 
 module.exports = {
-	APP_DIR,
-	BUILD_DIR,
-	PUBLIC_PATH,
-	ASSETS_PATH,
-	includePathFromSrc,
-	includePathFromPublic,
-	includePathFromAssets,
-	includePathFromDist,
+  APP_DIR,
+  BUILD_DIR,
+  PUBLIC_PATH,
+  ASSETS_PATH,
+  includePathFromSrc,
+  includePathFromPublic,
+  includePathFromAssets,
+  includePathFromDist,
 };

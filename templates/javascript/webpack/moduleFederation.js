@@ -1,4 +1,5 @@
-const { includePathFromSrc } = require('./paths');
+// Uncomment the following line when need to use it
+// const { includePathFromSrc } = require('./paths');
 
 /**
  * Object where will be include all
@@ -17,6 +18,6 @@ const exposes = {};
 const remotes = {};
 
 module.exports = {
-	exposes,
-	remotes,
+  exposes,
+  remotes,
 };

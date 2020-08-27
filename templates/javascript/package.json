@@ -13,15 +13,16 @@
     "analyze": false
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack/webpack.development.js",
     "build": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.production.js",
-    "lint": "eslint --ext .ts,.tsx,.js,.jsx --no-error-on-unmatched-pattern src/",
-    "lint:fix": "eslint --ext .ts,.tsx,.js,.jsx --no-error-on-unmatched-pattern --quiet --fix",
+    "lint:fix": "eslint --fix",
+    "lint": "eslint src/",
+    "precise-commits": "precise-commits",
     "pretest": "yarn run test:clean && yarn run lint",
+    "prettify": "prettier . --write",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack/webpack.development.js",
     "test:clean": "rimraf ./coverage",
-    "test": "cross-env NODE_ENV=test jest --config jest.config.js --coverage",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
-    "prettify": "prettier . --write"
+    "test": "cross-env NODE_ENV=test jest --config jest.config.js --coverage"
   },
   "dependencies": {
     "clean-webpack-plugin": "3.0.0",
@@ -61,17 +62,18 @@
     "eslint-plugin-package-json": "0.1.4",
     "eslint-plugin-prettier": "3.1.4",
     "eslint-plugin-react": "7.20.6",
-		"eslint-plugin-react-hooks": "4.1.0",
-		"file-loader": "6.0.0",
+    "eslint-plugin-react-hooks": "4.1.0",
+    "file-loader": "6.0.0",
     "html-webpack-plugin": "^4.3.0",
+    "husky": "4.2.5",
     "identity-obj-proxy": "3.0.0",
     "jest": "26.4.2",
     "jest-css-modules": "2.1.0",
     "jest-enzyme": "7.1.2",
-    "lint-staged": "10.2.11",
     "mini-css-extract-plugin": "^0.10.0",
     "node-sass": "4.14.1",
     "optimize-css-assets-webpack-plugin": "5.0.3",
+    "precise-commits": "1.0.2",
     "prettier": "2.1.0",
     "raf": "3.4.1",
     "react-hot-loader": "4.12.21",
@@ -81,26 +83,11 @@
     "style-loader": "1.2.1",
     "stylelint": "13.6.1",
     "stylelint-config-sass-guidelines": "7.0.0",
-		"terser-webpack-plugin": "4.1.0",
-		"url-loader": "4.1.0",
+    "terser-webpack-plugin": "4.1.0",
+    "url-loader": "4.1.0",
     "webpack-bundle-analyzer": "3.8.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
-  },
-  "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
-      "yarn run lint:fix",
-      "git add --force"
-    ],
-    "*.{md,json}": [
-      "prettier --write",
-      "git add --force"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npx lint-staged"
-    }
   },
   "repository": {
     "type": "git",

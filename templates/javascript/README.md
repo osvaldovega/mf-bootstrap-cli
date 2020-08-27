@@ -23,11 +23,13 @@ Micro-Frontend basic template.
   ```
 
 - To run the tests.
+
   ```
   $ yarn test
   ```
 
 - To run the test on watch mode.
+
   ```
   $ yarn test:watch
   ```
@@ -72,20 +74,20 @@ These are the available scripts:
    ```
    // .env
 
-	# Name of the application
-	APP_NAME=mfApplication
+   # Name of the application
+   APP_NAME=mfApplication
 
-	# Name of the Webpack Module Federation bundle
-	MF_NAME=mfApplication
+   # Name of the Webpack Module Federation bundle
+   MF_NAME=mfApplication
 
-	# Application port
-	PORT=3001
+   # Application port
+   PORT=3001
 
-	#  Use as output public path for webpack (DEVELOPMENT)
-	HOST=localhost
+   #  Use as output public path for webpack (DEVELOPMENT)
+   HOST=localhost
 
-	# Use as output public path for webpack (PRODUCTION)
-	PUBLIC_PATH_PROD=/
+   # Use as output public path for webpack (PRODUCTION)
+   PUBLIC_PATH_PROD=/
    ```
 
 3. Start the project running the command.
@@ -102,26 +104,26 @@ To expose any type of assets or element using the MF plugin, first check that yo
    ```
    const { includePathFromSrc } = require('./paths');
 
-	/**
-	* Object where will be include all
-	* components, logic and shared files
-	* e.g './Button': includePathFromSrc('component/Button/index.js')
-	*/
-	const exposes = {};
+   /**
+   * Object where will be include all
+   * components, logic and shared files
+   * e.g './Button': includePathFromSrc('component/Button/index.js')
+   */
+   const exposes = {};
 
-	/**
-	* Object with the names of remotes files
-	* module federation bundle files to include
-	* in the application.
-	* e.g <remote name>: '<MF_NAME>@http://localhost:<PORT>/static/remoteEntry.js'
-	* e.g mfRemote: 'mfRemote@http://localhost:3002/static/remoteEntry.js'
-	*/
-	const remotes = {};
+   /**
+   * Object with the names of remotes files
+   * module federation bundle files to include
+   * in the application.
+   * e.g <remote name>: '<MF_NAME>@http://localhost:<PORT>/static/remoteEntry.js'
+   * e.g mfRemote: 'mfRemote@http://localhost:3002/static/remoteEntry.js'
+   */
+   const remotes = {};
 
-	module.exports = {
-		exposes,
-		remotes,
-	};
+   module.exports = {
+   	exposes,
+   	remotes,
+   };
    ```
 
 2. Edit the file and add the list or assets inside the `exposes` object:
@@ -154,53 +156,55 @@ To expose any type of assets or element using the MF plugin, first check that yo
 
 1. Confirm that the project is running properly locally.
 2. Open the `webpack/moduleFederation.js` file, should look like this:
-	```
-	const { includePathFromSrc } = require('./paths');
 
-	/**
-	* Object where will be include all
-	* components, logic and shared files
-	* e.g './Button': includePathFromSrc('component/Button/index.js')
-	*/
-	const exposes = {};
-
-	/**
-	* Object with the names of remotes files
-	* module federation bundle files to include
-	* in the application.
-	* e.g <remote name>: '<MF_NAME>@http://localhost:<PORT>/static/remoteEntry.js'
-	* e.g mfRemote: 'mfRemote@http://localhost:3002/static/remoteEntry.js'
-	*/
-	const remotes = {};
-
-	module.exports = {
-		exposes,
-		remotes,
-	};
    ```
-3. Edit the file and add inside the `remotes` object the reference to the assets you need to import.
-  
-	```
-	/**
-	* Object with the names of remotes files
-	* module federation bundle files to include
-	* in the application.
-	* e.g <remote name>: '<MF_NAME>@http://localhost:<PORT>/static/remoteEntry.js'
-	* e.g mfRemote: 'mfRemote@http://localhost:3002/static/remoteEntry.js'
-	*/
-   const remotes = {
-		 <module federation name>: '<module federation name>@<URL>:<port>/remoteEntry.js'
-	 };
-	```
+   const { includePathFromSrc } = require('./paths');
 
-	> NOTE: The module federation name, is the name used for the other micro-frontend application inside the `.env` file, the variable name is `MF_NAME`.
-	> In case you are pointing to the production URL, you need to use the `module federation name`, domain and the remoteEntry.js, like this: `mfApplication: 'mfApplication@<production URL>/remoteEntry.js'`
+   /**
+   * Object where will be include all
+   * components, logic and shared files
+   * e.g './Button': includePathFromSrc('component/Button/index.js')
+   */
+   const exposes = {};
+
+   /**
+   * Object with the names of remotes files
+   * module federation bundle files to include
+   * in the application.
+   * e.g <remote name>: '<MF_NAME>@http://localhost:<PORT>/static/remoteEntry.js'
+   * e.g mfRemote: 'mfRemote@http://localhost:3002/static/remoteEntry.js'
+   */
+   const remotes = {};
+
+   module.exports = {
+   	exposes,
+   	remotes,
+   };
+   ```
+
+3. Edit the file and add inside the `remotes` object the reference to the assets you need to import.
+
+   ```
+   /**
+   * Object with the names of remotes files
+   * module federation bundle files to include
+   * in the application.
+   * e.g <remote name>: '<MF_NAME>@http://localhost:<PORT>/static/remoteEntry.js'
+   * e.g mfRemote: 'mfRemote@http://localhost:3002/static/remoteEntry.js'
+   */
+   const remotes = {
+   	 <module federation name>: '<module federation name>@<URL>:<port>/remoteEntry.js'
+    };
+   ```
+
+   > NOTE: The module federation name, is the name used for the other micro-frontend application inside the `.env` file, the variable name is `MF_NAME`.
+   > In case you are pointing to the production URL, you need to use the `module federation name`, domain and the remoteEntry.js, like this: `mfApplication: 'mfApplication@<production URL>/remoteEntry.js'`
 
 4. Restart the application and confirm the application is still running properly.
 5. To start using the remote entry in your application go to the file that you need to import the assets and import it in the following way
-	```
-	const <asset name> = React.lazy(() => import('mfApplication/<asset name>'));
-	```
 
-	> Remember: `mfApplication` is the value that you assign to the remote entry in your application inside the `webpack/moduleFederation.js` file in the remotes section.
+   ```
+   const <asset name> = React.lazy(() => import('mfApplication/<asset name>'));
+   ```
 
+   > Remember: `mfApplication` is the value that you assign to the remote entry in your application inside the `webpack/moduleFederation.js` file in the remotes section.
