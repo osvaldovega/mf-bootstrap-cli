@@ -17,6 +17,6 @@ const exposes = {};
 const remotes = {};
 
 module.exports = {
-	exposes,
-	remotes,
+  exposes,
+  remotes,
 };

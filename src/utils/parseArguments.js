@@ -1,6 +1,6 @@
 import arg from 'arg';
 
-const parseArgumentsIntoOptions = (rawArgs) => {
+const parseArgumentsIntoOptions = (argv) => {
   const args = arg(
     {
       // Types
@@ -24,7 +24,7 @@ const parseArgumentsIntoOptions = (rawArgs) => {
       '-h': '--help',
     },
     {
-      argv: rawArgs.slice(2),
+      argv,
     },
   );
 

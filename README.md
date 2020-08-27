@@ -9,7 +9,7 @@
 ![GitHub Release Date](https://img.shields.io/github/release-date/osvaldovega/mf-bootstrap-cli?style=plastic)
 ![GitHub package.json dynamic](https://img.shields.io/github/package-json/keywords/osvaldovega/mf-bootstrap-cli?style=plastic)
 
-This package includes the global command to create a React micro-frontend project (base project).
+This package includes the global command to create a React micro-frontend project (base project) with Webpack 5 (Module Federation).
 
 After all the questions are answered or all necessary arguments passed, the CLI will create a directory in the same directory where the CLI run. The output will be a basic React base application including the configuration of `Webpack 5.0.0-beta.25` to make possible the use of the `Module Federation Plugin`.
 
