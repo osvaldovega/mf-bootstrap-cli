@@ -70,11 +70,6 @@
     "node": ">=14"
   },
   "license": "MIT",
-  "husky": {
-    "hooks": {
-      "pre-commit": "precise-commits"
-    }
-  },
   "bugs": {
     "url": "https://github.com/osvaldovega/mf-bootstrap-cli/issues"
   },
