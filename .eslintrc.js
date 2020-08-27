@@ -7,34 +7,58 @@ module.exports = {
   parser: 'babel-eslint',
 
   env: {
-    es2020: true,
+    jest: true,
+    browser: true,
     node: true,
+    es6: true,
   },
 
-  extends: ['eslint:recommended', 'airbnb-base', 'node', 'prettier'],
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'airbnb',
+    'prettier',
+    'plugin:prettier/recommended',
+    'plugin:package-json/recommended',
+  ],
+
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
+  },
 
   parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
     ecmaVersion: 2020,
     sourceType: 'module',
   },
 
-  plugins: ['prettier'],
-
-  ignorePatterns: ['/node_modules/**'],
+  plugins: ['react', 'react-hooks', 'jsx-a11y', 'import', 'prettier', 'package-json'],
 
   rules: {
     'linebreak-style': ['error', 'unix'],
     'no-console': ['error', { allow: ['warn', 'error'] }],
-    curly: ['error'],
+    curly: ['error', 'multi-line'],
     indent: ['error', 2],
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
     'dot-location': ['error', 'property'],
     eqeqeq: ['error', 'always'],
-    'prettier/prettier': ['error', prettierOptions],
-    'import/no-extraneous-dependencies': 0,
     'no-param-reassign': ['error', { props: false }],
-    'import/no-commonjs': [0],
-    'no-sync': ['error', { allowAtRootLevel: true }],
+    // React
+    'react/jsx-filename-extension': 0,
+    'react/jsx-indent': [2, 2, { checkAttributes: true, indentLogicalExpressions: true }],
+    'react/no-unescaped-entities': 0,
+    // Prettier
+    'prettier/prettier': ['error', prettierOptions],
+    // Import
+    'import/no-unresolved': [2, { commonjs: true, amd: true, caseSensitive: false }],
+    'import/named': 2,
+    'import/namespace': 2,
+    'import/default': 2,
+    'import/export': 2,
+    'import/no-extraneous-dependencies': 0,
   },
 };
