@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const dotenv = require('dotenv');
 const { dependencies } = require('../package.json');
@@ -9,7 +10,6 @@ const mf = require('./moduleFederation');
 const {
   APP_DIR,
   BUILD_DIR,
-  ASSETS_PATH,
   includePathFromPublic,
   includePathFromAssets,
   includePathFromSrc,
@@ -27,8 +27,10 @@ module.exports = {
   name: APP_NAME,
 
   output: {
-    path: BUILD_DIR,
     uniqueName: APP_NAME,
+    filename: 'js/[name].[contenthash].js',
+    chunkFilename: 'js/[name].[contenthash].chunk.js',
+    path: BUILD_DIR,
   },
 
   resolve: {
@@ -55,17 +57,16 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        include: APP_DIR,
         use: { loader: 'babel-loader' },
+        include: APP_DIR,
       },
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
+        include: [APP_DIR],
       },
       {
-        test: /\.scss$/,
-        exclude: /node_modules/,
+        test: /\.s(a|c)ss$/,
         use: [
           'style-loader',
           // {
@@ -95,7 +96,8 @@ module.exports = {
             },
           },
         ],
-        include: ASSETS_PATH,
+        include: [includePathFromAssets('fonts')],
+        exclude: [includePathFromAssets('images')],
       },
       {
         test: /\.(png|gif|jp(e*)g|svg)$/,
@@ -108,7 +110,8 @@ module.exports = {
             },
           },
         ],
-        include: ASSETS_PATH,
+        include: [includePathFromAssets('images')],
+        exclude: [includePathFromAssets('fonts')],
       },
     ],
   },
@@ -119,9 +122,11 @@ module.exports = {
     new CleanWebpackPlugin(),
 
     new MiniCssExtractPlugin({
-      filename: 'static/[name].bundle.css',
-      chunkFilename: 'static/[id].bundle.css',
+      filename: 'styles/[name].[contenthash].css',
+      chunkFilename: 'styles/[id].[contenthash].css',
     }),
+
+    new OptimizeCSSAssetsPlugin(),
 
     new HtmlWebpackPlugin({
       template: includePathFromPublic('index.html'),
@@ -133,7 +138,7 @@ module.exports = {
 
     new ModuleFederationPlugin({
       name: MF_NAME,
-      filename: 'remoteEntry.js',
+      filename: 'js/remoteEntry.js',
       exposes: mf.exposes,
       remotes: mf.remotes,
       shared: dependencies,
@@ -146,6 +151,14 @@ module.exports = {
     moduleIds: 'deterministic',
 
     splitChunks: {
+      chunks: 'async',
+      minSize: 20 * 1024,
+      minRemainingSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 30,
+      maxInitialRequests: 30,
+      enforceSizeThreshold: 50 * 1024,
+
       cacheGroups: {
         default: false,
 

@@ -12,16 +12,13 @@ const webpackDevelopment = merge(webpackBaseConfig, {
     app: ['core-js/stable', 'regenerator-runtime/runtime', includePathFromSrc('index.js')],
   },
 
-  // Don't use hashes in dev mode for better performance
   output: {
-    filename: 'static/[name].js',
-    chunkFilename: 'static/[name].chunk.js',
     publicPath: `http://${HOST}:${PORT}/`,
   },
 
   mode: 'development',
 
-  devtool: 'cheap-module-source-map',
+  devtool: 'eval-cheap-source-map',
 
   cache: {
     type: 'memory',
@@ -34,7 +31,6 @@ const webpackDevelopment = merge(webpackBaseConfig, {
   devServer: {
     historyApiFallback: true,
     contentBase: BUILD_DIR,
-    hot: true,
     port: PORT,
     host: HOST,
     compress: true,
