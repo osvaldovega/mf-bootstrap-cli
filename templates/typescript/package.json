@@ -16,8 +16,8 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.production.js",
     "check-types": "tsc",
-    "lint:fix": "eslint --fix",
-    "lint": "eslint src/",
+    "lint:fix": "eslint . --fix",
+    "lint": "eslint .",
     "precise-commits": "precise-commits",
     "pretest": "yarn run test:clean && yarn run lint",
     "prettify": "prettier . --write",
