@@ -13,9 +13,9 @@
   },
   "type": "commonjs",
   "scripts": {
-    "lint:fix": "eslint src/ --fix",
+    "lint:fix": "eslint . --fix",
     "lint:report": "eslint --ext .ts,.js --no-error-on-unmatched-pattern -f json -o report.json src/",
-    "lint": "eslint src/ && eslint templates/",
+    "lint": "eslint . && eslint templates/",
     "precise-commits": "precise-commits",
     "release:major": "np major",
     "release:minor": "np minor",
@@ -46,20 +46,20 @@
   },
   "devDependencies": {
     "babel-eslint": "10.1.0",
-    "eslint": "7.7.0",
+    "eslint": "7.9.0",
     "eslint-config-airbnb": "18.2.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-import": "2.22.0",
     "eslint-plugin-jsx-a11y": "6.3.1",
     "eslint-plugin-package-json": "0.1.4",
     "eslint-plugin-prettier": "3.1.4",
-    "eslint-plugin-react": "7.20.6",
-    "eslint-plugin-react-hooks": "4.1.0",
+    "eslint-plugin-react": "7.21.2",
+    "eslint-plugin-react-hooks": "4.1.2",
     "generate-changelog": "1.8.0",
-    "husky": "4.2.5",
-    "np": "6.4.0",
+    "husky": "4.3.0",
+    "np": "6.5.0",
     "precise-commits": "1.0.2",
-    "prettier": "2.1.1"
+    "prettier": "2.1.2"
   },
   "author": "Osvaldo Vega A (OvEgA)",
   "repository": {
