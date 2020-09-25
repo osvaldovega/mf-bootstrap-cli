@@ -1,6 +1,5 @@
 const { merge } = require('webpack-merge');
 const TerserPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const webpackBaseConfig = require('./webpack.config');
 const { includePathFromSrc } = require('./paths');
@@ -13,8 +12,6 @@ const webpackProduction = merge(webpackBaseConfig, {
   },
 
   output: {
-    filename: 'static/[name].[contenthash].js',
-    chunkFilename: 'static/[name].[contenthash].chunk.js',
     publicPath: PUBLIC_PATH_PROD,
   },
 
@@ -23,15 +20,15 @@ const webpackProduction = merge(webpackBaseConfig, {
   devtool: 'source-map',
 
   performance: {
-    hints: 'error',
-    maxAssetSize: 150 * 1024, // 150 KiB
-    maxEntrypointSize: 150 * 1024, // 150 KiB
+    hints: 'warning',
+    maxAssetSize: 200 * 1024, // 150 KiB
+    maxEntrypointSize: 200 * 1024, // 150 KiB
   },
 
   plugins: [
     new CompressionPlugin({
       algorithm: 'gzip',
-      test: /\.js$|\.css$|\.html$/,
+      test: /\.js$|\.tsx$|\.ts$|\.css$|\.html$/,
       threshold: 10240,
       minRatio: 0.8,
     }),
@@ -60,8 +57,6 @@ const webpackProduction = merge(webpackBaseConfig, {
         },
         sourceMap: true,
       }),
-
-      new OptimizeCSSAssetsPlugin(),
     ],
   },
 });
